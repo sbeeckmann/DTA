@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
             Entry entry = new Entry("Dummy entry " + i);
+            entry.setCreationTime(System.currentTimeMillis() - (1000 * 60 * 60 * 24 * i)); // we subtract i days of the current time in milliseconds
             dummies.add(entry);
         }
 
