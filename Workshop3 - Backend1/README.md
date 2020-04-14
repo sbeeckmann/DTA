@@ -22,7 +22,7 @@ Wildfly kann einfach in ein Verzeichnis kopiert werden.
 
 Postgres dem Installationswizard folgen, dabei ist es wichtig sich den Port zu merken (Standard ist 5432) und den vergebenen Nutzernamen (Standard ist postgres) und das Passwort, diese werden später noch benötigt.
 
-pgAdmin einfach den Wizward folgen.
+pgAdmin einfach den Wizard folgen.
 
 #### 3. Anlegen einer Datenbank
 
@@ -53,11 +53,11 @@ Hier vergebt ihr einen Namen, in "Database", welchen wir später noch benötigen
 
 Danach könnt ihr speichern.
 
-Damit ist die Postgres Konfiguration abgeschloßen
+Damit ist die Postgres Konfiguration abgeschlossen
 
 #### 4. Wildfly starten und konfigurieren
 
-Wildfly lässt sich am besten direkt von der Commandozeile starten.
+Wildfly lässt sich am besten direkt von der Kommandozeile starten.
 
 Dazu gebt ihr am besten einfach bei euch unter Windwos in der Suche "cmd" ein und als Vorschlag sollte die Command Promt App kommen (das ist der Englische Name).
 
@@ -87,7 +87,9 @@ cd bin
 
 Das geschieht mit "standalone.bat"  Enter
 
-Dies started den Wildfly
+Um den Server zu beenden kann einfach "strg + c" gedrückt werden.
+
+Dies startet den Wildfly
 
 Die Kommandozeile wird nun einige Informationen ausgeben, siehe folgendes Bild
 
@@ -147,13 +149,75 @@ Bestätigt die nächste Frage mit "yes"
 
 Die nächste Frage mit "no"
 
-Mit enter bestätigen und fertig
+Mit Enter bestätigen und fertig
 
 ##### Wildfly Konsole einloggen
 
-Jetzt kommt der Wildfly port ins Spiel (9990 oder den, welchen ihr vergeben habt)
+Jetzt kommt der Wildfly Port ins Spiel (9990 oder den, welchen ihr vergeben habt)
 
 navigiert im Browser zu localhost:9990 (oder anderen Port)
 
 Ihr werdet nun nach dem  im Schritt davor vergebenen Nutzernamen und Passwort gefragt.
+
+
+
+##### Postgres Deployment
+
+Eingeloggt in die Wildfly Konsole, können wir nun den vorher herunter geladenen Postgres Driver installieren.
+
+Dazu den Tab "Deployments" auswählen und auf das "+" Symbol klicken -> Upload Deployment auswählen und in dem anschließenden Dialog den Driver auswählen (in meinem Fall postgresql-42.2.12.jar) 
+
+Dann auf next und auf finish.
+
+##### Datenquelle konfigurieren
+
+Als nächstes müssen wir die Datenquelle konfigurieren, die später in der Anwendung verwendet wird.
+
+Dazu wählen wir den Tab "Configuration", dann unter "Subsystems" den Punkt "Datasources & Drivers" und dann den Punkt "Datasources".
+
+In den Tab "Datasources" wählen wir oben das "+" Symbol und "Add Datasource".
+
+In den Dialog wählen wir folgende Settings:
+
+1. PostgreSQL
+
+2. Name: postgres
+
+   JNDI Name: java:/jdbc/dta
+
+3. Driver name: Aus den Dropdown wählen wir den Postgres Driver vom Schritt davor
+
+   Alle anderen Felder können so bleiben
+
+4. ConnectionUlr: jdbc:postgresql://localhost:{port}/{databasename}
+
+   wobei {port} mit dem port zu ersetzen ist, welcher bei der Postgres Installation gewählt wurde z.b. 5432
+
+   {databasename} mit dem Namen der Datenbank, welchen ihr in Schritt 3 vergeben habt ausgetauscht wird
+
+   User Name: Der Name den ihr bei der Installation von Postgres angegeben habt z.b. postgres
+
+   Password: Das dazugehörige Passwort
+
+   Security Domain: Da wird nichts eingetragen
+
+5. Test Connection -> das wird erstmal fehlschlagen, einfach auf "Next" 
+
+6. "Finish auswählen"
+
+##### Standartquelle konfigurieren
+
+Als nächstes müssen wir Wildfly noch mitteilen, das er diese Datenquelle immer verwenden soll.
+
+Dazu müssen wir in den Tab "Configuration" -> "Subsystems" -> "EE", dort auf "View" klicken
+
+In dem neuen Fenster, links in der Navigation "Default Bindings" auswählen -> Edit selektieren 
+
+Den Inhalt des Feldes "Datasource" mit "java:/jdbc/dta" austauschen.
+
+Nun kann der Wildfly neu gestartet werden.
+
+Dazu einfach in der Konsole wieder "strg + c" und die standalone.bat erneut ausführen
+
+Damit ist die Konfiguration von Wildfly abgeschlossen
 
