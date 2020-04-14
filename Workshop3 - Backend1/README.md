@@ -232,3 +232,46 @@ Falls noch nicht geschehen, bitte ladet das [Github Repository](https://github.c
 Das initiale Projekt findet ihr dann in "Workshop3 - Backend1/DTABackend Skeleton".
 
 Es handelt sich bei dem Projekt um ein Maven projekt. Einfach in IntellJ öffnen, indem wir auf File -> Open geht, navigiert dann in den Ordner, wo ihr es entpackt habt und wählt dort die "pom.xml" aus. Bei der Frage wie es importiert werden soll, wählt "as Projekt aus."
+
+Anschließend sollte sich das Projekt öffnen. 
+
+Links seht ihr die Strukutur der Anwendung.
+
+Nun muss das ganze mit Maven gebaut werden, dazu muss das Install target ausgeführt werden.
+
+Maven findet ihr rechts an der Seite, dort unter Lifecylce findet ihr das Install target.
+
+<figure>
+  <img src="images/maven.PNG" alt="Trulli" style="width:100%">
+  <figcaption>Maven install</figcaption>
+</figure>
+
+Manchmal ist es auch sinnvoll, vor dem install das Clean target auszuführen, dies ist meist hilfreich, wenn irgendwelche sehr seltsamen Fehler kommen.
+
+Solltet ihr dort kein Maven finden, dann wurde das Projekt vermutlich nicht korrekt als Maven Projekt geladen und ihr müsst es über die pom.xml noch einmal importieren.
+
+Dazu Rechtsklick auf die pom -> maven und dann entweder import as maven oder reimport
+
+<figure>
+  <img src="images/pom.PNG" alt="Trulli" style="width:100%">
+  <figcaption>Pom Pfad</figcaption>
+</figure>
+
+
+
+Nachdem ihr das Install target ausgeführt habt, erscheint in dem Projektverzeichnis ein neuer Ordner, target.
+
+Dieser beinhaltet eine Datei mit dem Namen "DTAListyBackend.war"
+
+<figure>
+  <img src="images/target.PNG" alt="Trulli" style="width:100%">
+  <figcaption>Target Pfad</figcaption>
+</figure>
+
+Diese Datei müsst ihr nun in euren Wildfly deployen, diese enthält die Anwendung (bzw bis jetzt noch nichts außer die Verbindung zu einer Datenbank und noch keine weitere Logik).
+
+Dazu kopiert die Datei in Pfad zu euren Wildfly/standalone/deployments
+
+Sollte der Wildfly gerade laufen, solltet ihr in der Kommandozeile sehr schnell ein paar neue Ausgaben sehen. Sollte er nicht laufen, startet ihn nachdem das Kopieren fertig ist. 
+
+Falls keine Fehler aufgetreten sind, seit ihr mit der Vorbereitung fertig.
