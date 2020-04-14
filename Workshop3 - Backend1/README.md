@@ -8,6 +8,8 @@ Folgende Schritte müssen als Vorbereitung getroffen werden, bevor ein erstes Pr
 
 #### 1. Herunterladen der benötigen Komponenten
 
+[IntellJ](https://www.jetbrains.com/idea/download/download-thanks.html?platform=windows&code=IIC) als Entwicklungsumgebung
+
 [Wildfly](https://wildfly.org/downloads/) (Zum Zeitpunkt der Erstellung dieser Readme 19.0.0.Final JavaEE Full & Web Distribution)
 
 [Postgres](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) 12.2
@@ -219,5 +221,14 @@ Nun kann der Wildfly neu gestartet werden.
 
 Dazu einfach in der Konsole wieder "strg + c" und die standalone.bat erneut ausführen
 
-Damit ist die Konfiguration von Wildfly abgeschlossen
+Damit ist die Konfiguration von Wildfly abgeschlossen.
 
+
+
+##### 5. Initiales Projekt herunterladen, bauen und ausführen
+
+Falls noch nicht geschehen, bitte ladet das [Github Repository](https://github.com/sbeeckmann/DTA) herunter. Dazu einfach rechts bei "Clone or download" das ganze als Zip herunterladen und irgendwo lokal bei euch auf der Festplatte entpacken.
+
+Das initiale Projekt findet ihr dann in "Workshop3 - Backend1/DTABackend Skeleton".
+
+Es handelt sich bei dem Projekt um ein Maven projekt. Einfach in IntellJ öffnen, indem wir auf File -> Open geht, navigiert dann in den Ordner, wo ihr es entpackt habt und wählt dort die "pom.xml" aus. Bei der Frage wie es importiert werden soll, wählt "as Projekt aus."
