@@ -1,4 +1,5 @@
 import entry.data.Entry;
+import entry.data.EntryHolder;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
@@ -55,6 +56,15 @@ public class TesterBean {
 
         if (lowPriorityEntries.isEmpty()) {
             createEntry("This is a low priority entry", true, Entry.Status.ACTIVE, Entry.Priority.LOW);
+        }
+
+        List<EntryHolder> holders = this.em.createQuery("Select eh from EntryHolder eh", EntryHolder.class).getResultList();
+        if (holders.isEmpty()) {
+            EntryHolder holder = new EntryHolder();
+            holder.setName("Default List");
+            holder.setEntries(entries);
+
+            this.em.persist(holder);
         }
     }
 
