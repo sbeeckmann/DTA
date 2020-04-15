@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +42,9 @@ public class EntryEditDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.entry_creation_dialog, container, false);
+
+        TextView header = view.findViewById(R.id.header);
+        header.setText("Eintrag editieren");
 
         this.entryName = view.findViewById(R.id.entryName);
         this.entryName.setText(this.entryToUpdate.getName());
