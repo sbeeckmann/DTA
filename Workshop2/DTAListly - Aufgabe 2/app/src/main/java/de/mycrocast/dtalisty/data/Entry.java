@@ -4,7 +4,7 @@ public class Entry {
 
     public enum Priority {
         LOW,
-        NORMAL,
+        MEDIUM,
         HIGH
     }
 
@@ -20,7 +20,7 @@ public class Entry {
     }
 
     public Entry(String name) {
-        this(name, Priority.NORMAL);
+        this(name, Priority.MEDIUM);
     }
 
     public String getName() {

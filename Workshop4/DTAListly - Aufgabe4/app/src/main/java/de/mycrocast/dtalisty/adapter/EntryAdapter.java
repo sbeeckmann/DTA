@@ -67,7 +67,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
                 holder.getPriorityView().setBackgroundColor(this.context.getResources().getColor(R.color.priorityHigh));
                 break;
             }
-            case NORMAL: {
+            case MEDIUM: {
                 holder.getPriorityView().setBackgroundColor(this.context.getResources().getColor(R.color.priorityMedium));
                 break;
             }

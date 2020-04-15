@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
                        }
                        break;
                     }
-                    case NORMAL: {
+                    case MEDIUM: {
                         if (!o1.isActive() && !o2.isActive()) {
-                            if (o2.getPriority() == Entry.Priority.NORMAL) {
+                            if (o2.getPriority() == Entry.Priority.MEDIUM) {
                                 return 0;
                             }
                             if (o2.getPriority() == Entry.Priority.HIGH) {

@@ -87,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements EntryAdapter.Clic
                         }
                         break;
                     }
-                    case NORMAL: {
+                    case MEDIUM: {
                         if (!o1.isActive() && !o2.isActive()) {
-                            if (o2.getPriority() == Entry.Priority.NORMAL) {
+                            if (o2.getPriority() == Entry.Priority.MEDIUM) {
                                 return 0;
                             }
                             if (o2.getPriority() == Entry.Priority.HIGH) {

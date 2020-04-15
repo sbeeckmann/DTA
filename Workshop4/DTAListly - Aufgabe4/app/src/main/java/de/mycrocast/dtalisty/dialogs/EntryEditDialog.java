@@ -19,19 +19,22 @@ import androidx.fragment.app.DialogFragment;
 import de.mycrocast.dtalisty.R;
 import de.mycrocast.dtalisty.data.Entry;
 
-public class EntryCreateDialog extends DialogFragment {
-
-    public interface OnEntryCreated {
-        void onEntryCreated(String name, Entry.Priority priority);
+public class EntryEditDialog extends DialogFragment {
+    public interface OnEntryEdited {
+        void onEntryEdited(Entry updatedEntry, int index);
     }
 
     private EditText entryName;
     private RadioGroup radioGroup;
     private Button saveButton;
-    private OnEntryCreated onEntryCreatedCallback;
+    private OnEntryEdited entryEditCallback;
+    private Entry entryToUpdate;
+    private int index;
 
-    public EntryCreateDialog(OnEntryCreated entryCreatedCallback) {
-        this.onEntryCreatedCallback = entryCreatedCallback;
+    public EntryEditDialog(OnEntryEdited entryEditCallback, Entry entryToUpdate, int entryIndex) {
+        this.entryEditCallback = entryEditCallback;
+        this.entryToUpdate = entryToUpdate;
+        this.index = entryIndex;
     }
 
     @Nullable
@@ -40,9 +43,29 @@ public class EntryCreateDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.entry_creation_dialog, container, false);
 
         this.entryName = view.findViewById(R.id.entryName);
+        this.entryName.setText(this.entryToUpdate.getName());
+
         this.radioGroup = view.findViewById(R.id.priorityGroup);
+        switch (this.entryToUpdate.getPriority()) {
+            case HIGH: {
+                this.radioGroup.check(R.id.highPriority);
+                break;
+            }
+            case MEDIUM: {
+                this.radioGroup.check(R.id.mediumPriority);
+                break;
+            }
+            case LOW: {
+                this.radioGroup.check(R.id.lowPriority);
+                break;
+            }
+            default: {
+                // could throw an error to show the next developer that we got a new status
+            }
+        }
+
         this.saveButton = view.findViewById(R.id.save);
-        this.saveButton.setEnabled(false);
+        this.saveButton.setEnabled(true);
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +87,8 @@ public class EntryCreateDialog extends DialogFragment {
                         break;
                     }
                 }
-                onEntryCreatedCallback.onEntryCreated(entryName.getText().toString(), priority);
+                Entry updated = new Entry(entryName.getText().toString(), priority);
+                entryEditCallback.onEntryEdited(updated, index);
                 dismiss();
             }
         });
