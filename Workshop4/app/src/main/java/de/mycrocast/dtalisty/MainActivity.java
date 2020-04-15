@@ -6,8 +6,11 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +20,9 @@ import java.util.Random;
 
 import de.mycrocast.dtalisty.adapter.EntryAdapter;
 import de.mycrocast.dtalisty.data.Entry;
+import de.mycrocast.dtalisty.dialogs.EntryCreateDialog;
 
-public class MainActivity extends AppCompatActivity implements EntryAdapter.ClickListener {
+public class MainActivity extends AppCompatActivity implements EntryAdapter.ClickListener, EntryCreateDialog.OnEntryCreated {
 
     private RecyclerView entryRecyclerView;
     private EntryAdapter entryAdapter;
@@ -29,6 +33,18 @@ public class MainActivity extends AppCompatActivity implements EntryAdapter.Clic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FloatingActionButton fab = this.findViewById(R.id.addButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+                EntryCreateDialog createDialog = new EntryCreateDialog(MainActivity.this);
+
+                createDialog.setCancelable(false);
+                createDialog.show(fragmentManager, "entryDialog");
+            }
+        });
 
         this.entryRecyclerView = this.findViewById(R.id.entries);
 
@@ -178,5 +194,12 @@ public class MainActivity extends AppCompatActivity implements EntryAdapter.Clic
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .show();
+    }
+
+    @Override
+    public void onEntryCreated(String name, Entry.Priority priority) {
+        this.entryData.add(new Entry(name, priority));
+        this.sortEntries();
+        this.entryAdapter.notifyDataSetChanged();
     }
 }

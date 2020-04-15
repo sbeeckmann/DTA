@@ -13,14 +13,20 @@ public class Entry {
     private boolean isActive;
     private Priority priority;
 
+
     public Entry(String name, Priority priority) {
         this.name = name;
         this.priority = priority;
         this.isActive = true;
+        this.creationTime = System.currentTimeMillis();
     }
 
     public Entry(String name) {
         this(name, Priority.NORMAL);
+    }
+
+    public Entry() {
+
     }
 
     public String getName() {
