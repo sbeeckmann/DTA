@@ -21,8 +21,9 @@ import java.util.Random;
 import de.mycrocast.dtalisty.adapter.EntryAdapter;
 import de.mycrocast.dtalisty.data.Entry;
 import de.mycrocast.dtalisty.dialogs.EntryCreateDialog;
+import de.mycrocast.dtalisty.dialogs.EntryEditDialog;
 
-public class MainActivity extends AppCompatActivity implements EntryAdapter.ClickListener, EntryCreateDialog.OnEntryCreated {
+public class MainActivity extends AppCompatActivity implements EntryAdapter.ClickListener, EntryCreateDialog.OnEntryCreated, EntryEditDialog.OnEntryEdited {
 
     private RecyclerView entryRecyclerView;
     private EntryAdapter entryAdapter;
@@ -197,9 +198,27 @@ public class MainActivity extends AppCompatActivity implements EntryAdapter.Clic
     }
 
     @Override
+    public void onEditClick(View view, int entryIndex) {
+        Entry entryToUpdate = entryData.get(entryIndex);
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        EntryEditDialog entryEditDialog = new EntryEditDialog(MainActivity.this, entryToUpdate, entryIndex);
+
+        entryEditDialog.setCancelable(false);
+        entryEditDialog.show(fragmentManager, "entryEdit");
+    }
+
+    @Override
     public void onEntryCreated(String name, Entry.Priority priority) {
         this.entryData.add(new Entry(name, priority));
         this.sortEntries();
+        this.entryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEntryEdited(Entry updatedEntry, int index) {
+        this.entryData.set(index, updatedEntry);
+        this.sortEntries();
+
         this.entryAdapter.notifyDataSetChanged();
     }
 }

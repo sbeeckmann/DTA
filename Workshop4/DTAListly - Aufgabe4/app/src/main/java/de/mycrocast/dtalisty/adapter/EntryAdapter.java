@@ -1,6 +1,5 @@
 package de.mycrocast.dtalisty.adapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,8 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         void onEntryClick(View view, int entryIndex);
 
         void onDeleteClick(View view, int entryIndex);
+
+        void onEditClick(View view, int entryIndex);
     }
 
     private List<Entry> entries;
@@ -98,6 +99,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         private View priorityView;
         private RelativeLayout background;
         private ImageButton deleteButton;
+        private ImageButton editButton;
 
         public EntryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,8 +111,10 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
             this.priorityView = itemView.findViewById(R.id.priority);
             this.background = itemView.findViewById(R.id.entryWrapper);
             this.deleteButton = itemView.findViewById(R.id.delete);
-
             this.deleteButton.setOnClickListener(this);
+
+            this.editButton = itemView.findViewById(R.id.edit);
+            this.editButton.setOnClickListener(this);
         }
 
         public TextView getEntryContent() {
@@ -134,9 +138,13 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
             if (clickListener != null) {
                 if (v == this.deleteButton) {
                     clickListener.onDeleteClick(v, this.getAdapterPosition());
-                } else {
-                    clickListener.onEntryClick(v, this.getAdapterPosition());
+                    return;
                 }
+                if (v == this.editButton) {
+                    clickListener.onEditClick(v, this.getAdapterPosition());
+                    return;
+                }
+                clickListener.onEntryClick(v, this.getAdapterPosition());
             }
         }
     }
