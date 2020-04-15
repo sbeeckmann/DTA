@@ -1,7 +1,5 @@
 package entry.data;
 
-import user.data.User;
-
 import javax.persistence.*;
 import java.util.List;
 
