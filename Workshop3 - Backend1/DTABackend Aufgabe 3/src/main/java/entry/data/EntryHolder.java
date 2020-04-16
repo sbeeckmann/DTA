@@ -14,9 +14,7 @@ public class EntryHolder {
     private String name;
 
     @OneToMany(
-            mappedBy = "entryHolder",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            orphanRemoval = true,
             fetch = FetchType.LAZY
     )
     private List<Entry> entries;
