@@ -1,7 +1,6 @@
 package entry.data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NamedQueries({
         @NamedQuery(name = Entry.NQ_GET_BY_STATUS, query = "Select e from Entry e where e.status = :status"),

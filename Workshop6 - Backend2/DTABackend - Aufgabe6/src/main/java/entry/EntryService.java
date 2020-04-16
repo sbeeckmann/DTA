@@ -21,7 +21,7 @@ public class EntryService {
     }
 
     @POST
-    @Path("UpdateEntry")
+    @Path("updateEntry")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String updateEntry(UpdateEntryRequest request) {
