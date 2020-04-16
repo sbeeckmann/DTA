@@ -9,5 +9,4 @@ public interface RecyclerClickListener{
     void onDeleteClick(View view, int entryIndex);
 
     void onEditClick(View view, int entryIndex);
-
 }

@@ -25,7 +25,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
-        android:hint="Name des Eintrages"
+        android:hint="Name der Liste"
         android:inputType="textPersonName" />
 
     <Button

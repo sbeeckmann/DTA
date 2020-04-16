@@ -13,7 +13,6 @@ public class Entry {
     private boolean isActive;
     private Priority priority;
 
-
     public Entry(String name, Priority priority) {
         this.name = name;
         this.priority = priority;

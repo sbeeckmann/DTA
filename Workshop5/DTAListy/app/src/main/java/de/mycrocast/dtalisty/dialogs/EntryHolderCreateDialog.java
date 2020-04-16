@@ -26,7 +26,7 @@ public class EntryHolderCreateDialog extends AbstractDialog {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.entry_creation_dialog, container, false);
+        View view = inflater.inflate(R.layout.entry_holder_creation_dialog, container, false);
         this.configure(view);
 
         TextView header = view.findViewById(R.id.header);

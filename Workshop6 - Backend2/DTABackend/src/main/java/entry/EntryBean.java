@@ -35,6 +35,8 @@ public class EntryBean {
             entry.setName(request.getName());
             entry.setStatus(Entry.Status.ACTIVE);
             entry.setCreationTime(System.currentTimeMillis());
+            entry.setActive(true);
+            entry.setPriority(request.getPriority());
 
             this.em.persist(entry);
 

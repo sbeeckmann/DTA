@@ -16,20 +16,23 @@ import de.mycrocast.dtalisty.R;
 public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.EntryHolderView> {
 
     private List<String> data;
-    private Context context;
+    private RecyclerClickListener clickListener;
 
     public EntryHolderAdapter(List<String> data) {
         this.data = data;
     }
 
+    public void setClickListener(RecyclerClickListener entryClickListener) {
+        this.clickListener = entryClickListener;
+    }
+
     @NonNull
     @Override
     public EntryHolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        this.context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(this.context);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
         View entryRowView = inflater.inflate(R.layout.item_entry_holder, parent, false);
-
         return new EntryHolderView(entryRowView);
     }
 
@@ -44,14 +47,13 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
         return this.data.size();
     }
 
-    public static class EntryHolderView extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+    public class EntryHolderView extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name;
 
         public EntryHolderView(@NonNull View itemView) {
             super(itemView);
-
             this.name = itemView.findViewById(R.id.name);
+            itemView.setOnClickListener(this);
         }
 
         public TextView getName() {
@@ -60,7 +62,7 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
 
         @Override
         public void onClick(View v) {
-
+            clickListener.onEntryClick(v, getAdapterPosition());
         }
     }
 }
