@@ -64,7 +64,7 @@ public class TesterBean {
         if (holders.isEmpty()) {
             EntryHolder holder = new EntryHolder();
             holder.setName("Default List");
-            holder.setEntries(totalEntries);
+            holder.setEntries(entries);
 
             this.em.persist(holder);
         }
@@ -72,7 +72,7 @@ public class TesterBean {
 
     private void createEntry(String name, boolean isActive, Entry.Status status, Entry.Priority priority) {
         Entry entry = new Entry();
-        entry.setCreationTime(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 2);
+        entry.setCreationTime(System.currentTimeMillis());
         entry.setName(name);
         entry.setStatus(status);
         entry.setActive(isActive);

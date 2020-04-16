@@ -6,7 +6,6 @@ import entry.data.Entry;
 public class UpdateEntryRequest {
 
     private Entry.Status status;
-
     private long entryId;
 
     public Entry.Status getStatus() {
