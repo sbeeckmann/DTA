@@ -27,7 +27,7 @@ public class TesterBean {
         if (entries.isEmpty()) {
             System.out.println("Creating new active entry");
             Entry entry = new Entry();
-            entry.setCreationTime(LocalDateTime.now());
+            entry.setCreationTime(System.currentTimeMillis());
             entry.setName("Entry1");
             entry.setStatus(Entry.Status.ACTIVE);
             entry.setActive(true);
@@ -43,7 +43,7 @@ public class TesterBean {
         if (doneEntries.isEmpty()) {
             System.out.println("Creating new done entry 2 days ago");
             Entry doneEntry = new Entry();
-            doneEntry.setCreationTime(LocalDateTime.now().minusDays(2));
+            doneEntry.setCreationTime(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 2);
             doneEntry.setName("This is a done entry");
             doneEntry.setStatus(Entry.Status.DONE);
             doneEntry.setActive(false);

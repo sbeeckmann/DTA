@@ -34,7 +34,7 @@ public class EntryBean {
             Entry entry = new Entry();
             entry.setName(request.getName());
             entry.setStatus(Entry.Status.ACTIVE);
-            entry.setCreationTime(LocalDateTime.now());
+            entry.setCreationTime(System.currentTimeMillis());
 
             this.em.persist(entry);
 

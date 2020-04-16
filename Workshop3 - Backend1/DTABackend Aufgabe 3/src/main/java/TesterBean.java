@@ -7,7 +7,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @LocalBean
@@ -72,7 +71,7 @@ public class TesterBean {
 
     private void createEntry(String name, boolean isActive, Entry.Status status, Entry.Priority priority) {
         Entry entry = new Entry();
-        entry.setCreationTime(LocalDateTime.now().minusDays(2));
+        entry.setCreationTime(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 2);
         entry.setName(name);
         entry.setStatus(status);
         entry.setActive(isActive);
