@@ -64,7 +64,7 @@ public class TesterBean {
         if (holders.isEmpty()) {
             EntryHolder holder = new EntryHolder();
             holder.setName("Default List");
-            holder.setEntries(entries);
+            holder.setEntries(totalEntries);
 
             this.em.persist(holder);
         }
