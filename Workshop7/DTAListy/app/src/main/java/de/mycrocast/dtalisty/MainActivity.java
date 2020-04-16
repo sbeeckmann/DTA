@@ -19,11 +19,12 @@ import java.util.List;
 import java.util.Random;
 
 import de.mycrocast.dtalisty.adapter.EntryAdapter;
+import de.mycrocast.dtalisty.adapter.RecyclerClickListener;
 import de.mycrocast.dtalisty.data.Entry;
 import de.mycrocast.dtalisty.dialogs.EntryCreateDialog;
 import de.mycrocast.dtalisty.dialogs.EntryEditDialog;
 
-public class MainActivity extends AppCompatActivity implements EntryAdapter.ClickListener, EntryCreateDialog.OnEntryCreated, EntryEditDialog.OnEntryEdited {
+public class MainActivity extends AppCompatActivity implements RecyclerClickListener, EntryCreateDialog.OnEntryCreated, EntryEditDialog.OnEntryEdited {
 
     private RecyclerView entryRecyclerView;
     private EntryAdapter entryAdapter;

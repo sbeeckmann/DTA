@@ -20,17 +20,9 @@ import de.mycrocast.dtalisty.data.Entry;
 
 public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHolder> {
 
-    public interface ClickListener {
-        void onEntryClick(View view, int entryIndex);
-
-        void onDeleteClick(View view, int entryIndex);
-
-        void onEditClick(View view, int entryIndex);
-    }
-
     private List<Entry> entries;
     private Context context;
-    private ClickListener clickListener;
+    private RecyclerClickListener clickListener;
 
     public EntryAdapter(List<Entry> entries) {
         this.entries = entries;
@@ -88,7 +80,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         return this.entries.size();
     }
 
-    public void setClickListener(ClickListener entryClickListener) {
+    public void setClickListener(RecyclerClickListener entryClickListener) {
         this.clickListener = entryClickListener;
     }
 

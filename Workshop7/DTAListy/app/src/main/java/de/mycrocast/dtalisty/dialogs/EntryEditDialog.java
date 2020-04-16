@@ -1,33 +1,25 @@
 package de.mycrocast.dtalisty.dialogs;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import de.mycrocast.dtalisty.R;
 import de.mycrocast.dtalisty.data.Entry;
 
-public class EntryEditDialog extends DialogFragment {
+public class EntryEditDialog extends AbstractDialog {
+
     public interface OnEntryEdited {
         void onEntryEdited(Entry updatedEntry, int index);
     }
 
-    private EditText entryName;
     private RadioGroup radioGroup;
-    private Button saveButton;
     private OnEntryEdited entryEditCallback;
     private Entry entryToUpdate;
     private int index;
@@ -42,12 +34,12 @@ public class EntryEditDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.entry_creation_dialog, container, false);
-
+        this.configure(view);
         TextView header = view.findViewById(R.id.header);
         header.setText("Eintrag editieren");
 
-        this.entryName = view.findViewById(R.id.entryName);
-        this.entryName.setText(this.entryToUpdate.getName());
+        this.nameView = view.findViewById(R.id.entryName);
+        this.nameView.setText(this.entryToUpdate.getName());
 
         this.radioGroup = view.findViewById(R.id.priorityGroup);
         switch (this.entryToUpdate.getPriority()) {
@@ -68,7 +60,6 @@ public class EntryEditDialog extends DialogFragment {
             }
         }
 
-        this.saveButton = view.findViewById(R.id.save);
         this.saveButton.setEnabled(true);
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,46 +82,28 @@ public class EntryEditDialog extends DialogFragment {
                         break;
                     }
                 }
-                Entry updated = new Entry(entryName.getText().toString(), priority);
+                Entry updated = new Entry(nameView.getText().toString(), priority);
                 entryEditCallback.onEntryEdited(updated, index);
                 dismiss();
             }
         });
 
-        Button cancelButton = view.findViewById(R.id.cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        this.entryName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (entryName.getText().toString().isEmpty()) {
-                    saveButton.setEnabled(false);
-                } else {
-                    saveButton.setEnabled(true);
-                }
-            }
-        });
         return view;
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
+    protected int getNameViewResource() {
+        return R.id.entryName;
     }
+
+    @Override
+    protected int getSaveButtonResource() {
+        return R.id.save;
+    }
+
+    @Override
+    protected int getCancelButtonResource() {
+        return R.id.cancel;
+    }
+
 }

@@ -2,33 +2,26 @@ package de.mycrocast.dtalisty.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import de.mycrocast.dtalisty.R;
 import de.mycrocast.dtalisty.data.Entry;
 
-public class EntryCreateDialog extends DialogFragment {
+public class EntryCreateDialog extends AbstractDialog {
 
     public interface OnEntryCreated {
         void onEntryCreated(String name, Entry.Priority priority);
     }
 
-    private EditText entryName;
     private RadioGroup radioGroup;
-    private Button saveButton;
     private OnEntryCreated onEntryCreatedCallback;
 
     public EntryCreateDialog(OnEntryCreated entryCreatedCallback) {
@@ -39,13 +32,13 @@ public class EntryCreateDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.entry_creation_dialog, container, false);
+        this.configure(view);
 
         TextView header = view.findViewById(R.id.header);
         header.setText("Eintrag erstellen");
 
-        this.entryName = view.findViewById(R.id.entryName);
         this.radioGroup = view.findViewById(R.id.priorityGroup);
-        this.saveButton = view.findViewById(R.id.save);
+
         this.saveButton.setEnabled(false);
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,45 +61,27 @@ public class EntryCreateDialog extends DialogFragment {
                         break;
                     }
                 }
-                onEntryCreatedCallback.onEntryCreated(entryName.getText().toString(), priority);
+                onEntryCreatedCallback.onEntryCreated(nameView.getText().toString(), priority);
                 dismiss();
             }
         });
 
-        Button cancelButton = view.findViewById(R.id.cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        this.entryName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (entryName.getText().toString().isEmpty()) {
-                    saveButton.setEnabled(false);
-                } else {
-                    saveButton.setEnabled(true);
-                }
-            }
-        });
         return view;
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
+    protected int getNameViewResource() {
+        return R.id.entryName;
     }
+
+    @Override
+    protected int getSaveButtonResource() {
+        return R.id.save;
+    }
+
+    @Override
+    protected int getCancelButtonResource() {
+        return R.id.cancel;
+    }
+
 }
