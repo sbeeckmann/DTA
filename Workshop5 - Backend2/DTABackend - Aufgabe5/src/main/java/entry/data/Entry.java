@@ -33,7 +33,7 @@ public class Entry {
     private String name;
 
     @Column
-    private LocalDateTime creationTime;
+    private long creationTime;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -60,11 +60,11 @@ public class Entry {
         this.name = name;
     }
 
-    public LocalDateTime getCreationTime() {
+    public long getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(long creationTime) {
         this.creationTime = creationTime;
     }
 
