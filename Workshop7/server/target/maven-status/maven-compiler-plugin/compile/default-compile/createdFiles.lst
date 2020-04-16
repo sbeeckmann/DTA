@@ -1,0 +1,14 @@
+messaging\requests\DeleteEntryHolderRequest.class
+entry\EntryService.class
+entry\data\Entry.class
+entry\data\EntryHolder.class
+entry\data\Entry$Priority.class
+messaging\requests\DeleteEntryRequest.class
+TesterBean.class
+messaging\requests\CreateEntryRequest.class
+entry\data\Entry$Status.class
+entry\EntryBean.class
+messaging\requests\UpdateEntryRequest.class
+messaging\response\BasicResponse.class
+messaging\requests\CreateEntryHolderRequest.class
+rest\DTAApplication.class
