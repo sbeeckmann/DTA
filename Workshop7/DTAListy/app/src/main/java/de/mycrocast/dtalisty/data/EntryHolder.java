@@ -1,23 +1,10 @@
-package entry.data;
+package de.mycrocast.dtalisty.data;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
 public class EntryHolder {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @Column
     private String name;
-
-    @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
     private List<Entry> entries;
 
     public long getId() {

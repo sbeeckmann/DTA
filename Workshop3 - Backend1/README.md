@@ -221,9 +221,29 @@ Nun kann der Wildfly neu gestartet werden.
 
 Dazu einfach in der Konsole wieder "strg + c" und die standalone.bat erneut ausführen
 
-Damit ist die Konfiguration von Wildfly abgeschlossen.
+##### Rest Interfaces umstellen
 
+Der letzte Schritt ist das Konfigurieren der Interfaces, auf die Wildfly hört.
 
+Dazu nagiviert in den Installationsordner von Wildfly/standalone/configuration
+
+Öffnet dort die Standalone.xml und navigiert zur Zeile 523 siehe Bild
+
+<figure>
+  <img src="images/standalone.xml_default.PNG" alt="Trulli" style="width:100%">
+  <figcaption>Interface IP ändern</figcaption>
+</figure>
+
+dort müssen die Zahlen "127.0.0.1"  jeweils durch "0.0.0.0" ersetzt werden.
+
+<figure>
+  <img src="images/standalone_xml_changed.PNG" alt="Trulli" style="width:100%">
+  <figcaption>Interface IP ändern</figcaption>
+</figure>
+
+Jetzt muss der Server ein letztes mal neu gestartet werden.
+
+Damit ist die Konfiguration von Wildfly abgeschlossen. 
 
 ##### 5. Initiales Projekt herunterladen, bauen und ausführen
 
