@@ -5,16 +5,9 @@ import entry.data.Entry;
 
 public class UpdateEntryRequest {
 
-    private Entry.Status status;
+    private Entry.Priority priority;
+    private String name;
     private long entryId;
-
-    public Entry.Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Entry.Status status) {
-        this.status = status;
-    }
 
     public long getEntryId() {
         return entryId;
@@ -22,5 +15,21 @@ public class UpdateEntryRequest {
 
     public void setEntryId(long entryId) {
         this.entryId = entryId;
+    }
+
+    public Entry.Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Entry.Priority priority) {
+        this.priority = priority;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

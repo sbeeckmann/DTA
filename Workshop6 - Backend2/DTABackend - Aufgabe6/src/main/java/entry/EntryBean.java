@@ -60,7 +60,8 @@ public class EntryBean {
                 return objectMapper.writeValueAsString(basicResponse);
             }
 
-            entry.setStatus(updateEntryRequest.getStatus());
+            entry.setPriority(updateEntryRequest.getPriority());
+            entry.setName(updateEntryRequest.getName());
             basicResponse.setResponseData(entry);
 
             return objectMapper.writeValueAsString(basicResponse);
@@ -80,7 +81,11 @@ public class EntryBean {
                 response.setError("Entry not found");
                 return objectMapper.writeValueAsString(response);
             }
-            
+
+            EntryHolder entryHolder = this.em.find(EntryHolder.class, deleteEntryRequest.getEntryHolderId());
+            if (entryHolder != null) {
+                entryHolder.removeEntry(entry);
+            }
             this.em.remove(entry);
 
             return objectMapper.writeValueAsString(response);
@@ -142,6 +147,42 @@ public class EntryBean {
             //TODO error handling -> logging
         }
 
+        return "";
+    }
+
+    public String onChangeEntryStatusRequest(ChangeEntryStatusRequest request) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        BasicResponse response = new BasicResponse();
+        try {
+            Entry entry = this.em.find(Entry.class, request.getEntryId());
+            if (entry == null) {
+                response.setError("Entry not found");
+                return objectMapper.writeValueAsString(response);
+            }
+            entry.setActive(request.isActive());
+            response.setResponseData(entry);
+            objectMapper.writeValueAsString(response);
+        } catch (JsonProcessingException ex) {
+
+        }
+        return "";
+    }
+
+    public String onEditEntryHolderRequest(EditEntryHolderRequest editEntryHolderRequest) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        BasicResponse response = new BasicResponse();
+        try {
+            EntryHolder eh = this.em.find(EntryHolder.class, editEntryHolderRequest.getEntryHolderId());
+            if (eh == null) {
+                response.setError("EntryHolder not found");
+                return objectMapper.writeValueAsString(response);
+            }
+            eh.setName(editEntryHolderRequest.getName());
+            response.setResponseData(eh);
+            return objectMapper.writeValueAsString(response);
+        } catch (JsonProcessingException ex) {
+
+        }
         return "";
     }
 }
