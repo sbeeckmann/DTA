@@ -83,6 +83,7 @@ public class EntryEditDialog extends AbstractDialog {
                     }
                 }
                 Entry updated = new Entry(EntryEditDialog.this.nameView.getText().toString(), priority);
+                updated.setId(entryToUpdate.getId());
                 EntryEditDialog.this.entryEditCallback.onEntryEdited(updated, EntryEditDialog.this.index);
                 EntryEditDialog.this.dismiss();
             }

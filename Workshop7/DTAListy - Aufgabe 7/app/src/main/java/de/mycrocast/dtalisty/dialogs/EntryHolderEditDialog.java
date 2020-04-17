@@ -43,7 +43,9 @@ public class EntryHolderEditDialog extends AbstractDialog {
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EntryHolderEditDialog.this.onEntryHolderEditCallback.onEntryHolderEdit(new EntryHolder(EntryHolderEditDialog.this.nameView.getText().toString()), EntryHolderEditDialog.this.index);
+                EntryHolder holder = new EntryHolder(EntryHolderEditDialog.this.nameView.getText().toString());
+                holder.setId(toUpdate.getId());
+                EntryHolderEditDialog.this.onEntryHolderEditCallback.onEntryHolderEdit(holder, EntryHolderEditDialog.this.index);
                 EntryHolderEditDialog.this.dismiss();
             }
         });

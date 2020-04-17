@@ -32,4 +32,6 @@ public class EntryHolder extends AbstractIdentifiable {
     public void setEntries(List<Entry> entries) {
         this.entries = entries;
     }
+
+
 }
