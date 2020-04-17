@@ -24,7 +24,7 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
     private static final int NUM_COLUMNS = 2;
 
     private EntryHolderAdapter holderAdapter;
-    private List<String> data;
+    private List<EntryHolder> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +32,19 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
         setContentView(R.layout.activity_overview);
 
         data = new ArrayList<>();
-        data.add("sglkm");
-        data.add("eeeee");
-        data.add("eeeee2");
-        data.add("eeeee3");
-        data.add("eeeee4");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
-        data.add("eeeee5");
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+        data.add(new EntryHolder("sglkm"));
+
 
         boolean portrait = this.getResources().getBoolean(R.bool.port);
         int numColumns = 2;
@@ -92,10 +91,9 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
 
     @Override
     public void onEntryHolderCreated(String name) {
-        EntryHolder holder = new EntryHolder();
-        holder.setName(name);
+        EntryHolder holder = new EntryHolder(name);
 
-        data.add(name);
+        data.add(holder);
         holderAdapter.notifyDataSetChanged();
     }
 }
