@@ -18,7 +18,7 @@ public abstract class AbstractIdentifiable {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         AbstractIdentifiable that = (AbstractIdentifiable) o;
-        return id == that.id;
+        return this.id == that.id;
     }
 
     @Override
