@@ -16,13 +16,13 @@ public abstract class AbstractIdentifiable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         AbstractIdentifiable that = (AbstractIdentifiable) o;
-        return id == that.id;
+        return this.id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(this.id);
     }
 }

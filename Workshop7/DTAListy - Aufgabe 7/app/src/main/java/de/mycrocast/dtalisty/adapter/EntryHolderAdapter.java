@@ -45,11 +45,14 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
         holder.getName().setText(entryHolder.getName());
 
         int activeCount = 0;
-        for (Entry entry : entryHolder.getEntries()) {
-            if (entry.isActive()) {
-                activeCount++;
+        if (entryHolder.getEntries() != null) {
+            for (Entry entry : entryHolder.getEntries()) {
+                if (entry.isActive()) {
+                    activeCount++;
+                }
             }
         }
+
         holder.getCount().setText(String.valueOf(activeCount));
     }
 

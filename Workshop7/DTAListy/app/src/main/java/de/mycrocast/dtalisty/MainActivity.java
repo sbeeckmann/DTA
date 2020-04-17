@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
             @Override
             public void onResponse(BasicResponse<Entry> response) {
                 if (response.getError() == null || response.getError().isEmpty()) {
-                    MainActivity.this.entryData.add(new Entry(name, priority));
+                    MainActivity.this.entryData.add(response.getResponseData());
                     MainActivity.this.sortEntries();
                     MainActivity.this.entryAdapter.notifyDataSetChanged();
                     Toast.makeText(MainActivity.this, "Erfolgreich erstellt", Toast.LENGTH_SHORT).show();

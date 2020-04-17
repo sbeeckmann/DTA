@@ -13,10 +13,6 @@ public class EntryHolder extends AbstractIdentifiable {
         this.entries = new ArrayList<>();
     }
 
-    public EntryHolder() {
-
-    }
-
     public String getName() {
         return this.name;
     }
