@@ -41,7 +41,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
 
     @Override
     public void onBindViewHolder(@NonNull EntryViewHolder holder, int position) {
-        Entry currentEntry = this.entries.get(position);
+        Entry currentEntry = entries.get(position);
         holder.getEntryContent().setText(currentEntry.getName());
 
         // convert long timestamp to actual string representation
@@ -118,25 +118,25 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         }
 
         public View getPriorityView() {
-            return this.priorityView;
+            return priorityView;
         }
 
         public RelativeLayout getBackground() {
-            return this.background;
+            return background;
         }
 
         @Override
         public void onClick(View v) {
-            if (EntryAdapter.this.clickListener != null) {
+            if (clickListener != null) {
                 if (v == this.deleteButton) {
-                    EntryAdapter.this.clickListener.onDeleteClick(v, this.getAdapterPosition());
+                    clickListener.onDeleteClick(v, this.getAdapterPosition());
                     return;
                 }
                 if (v == this.editButton) {
-                    EntryAdapter.this.clickListener.onEditClick(v, this.getAdapterPosition());
+                    clickListener.onEditClick(v, this.getAdapterPosition());
                     return;
                 }
-                EntryAdapter.this.clickListener.onEntryClick(v, this.getAdapterPosition());
+                clickListener.onEntryClick(v, this.getAdapterPosition());
             }
         }
     }

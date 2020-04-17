@@ -80,26 +80,26 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
         }
 
         public TextView getName() {
-            return this.name;
+            return name;
         }
 
         public TextView getCount() {
-            return this.count;
+            return count;
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.edit: {
-                    EntryHolderAdapter.this.clickListener.onEditClick(v, this.getAdapterPosition());
+                    clickListener.onEditClick(v, getAdapterPosition());
                     return;
                 }
                 case R.id.delete: {
-                    EntryHolderAdapter.this.clickListener.onDeleteClick(v, this.getAdapterPosition());
+                    clickListener.onDeleteClick(v, getAdapterPosition());
                     return;
                 }
             }
-            EntryHolderAdapter.this.clickListener.onEntryClick(v, this.getAdapterPosition());
+            clickListener.onEntryClick(v, getAdapterPosition());
         }
     }
 }

@@ -10,22 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import de.mycrocast.dtalisty.R;
-import de.mycrocast.dtalisty.data.EntryHolder;
 
-public class EntryHolderEditDialog extends AbstractDialog {
+public class EntryHolderCreateDialog extends AbstractDialog {
 
-    public interface OnEntryHolderEdit {
-        void onEntryHolderEdit(EntryHolder name, final int index);
+    public interface OnEntryHolderCreated {
+        void onEntryHolderCreated(String name);
     }
 
-    private OnEntryHolderEdit onEntryHolderEditCallback;
-    private EntryHolder toUpdate;
-    private int index;
+    private OnEntryHolderCreated onEntryHolderCreatedCallback;
 
-    public EntryHolderEditDialog(OnEntryHolderEdit onEntryHolderEditCallback, EntryHolder toUpdate, int index) {
-        this.onEntryHolderEditCallback = onEntryHolderEditCallback;
-        this.toUpdate = toUpdate;
-        this.index = index;
+    public EntryHolderCreateDialog(OnEntryHolderCreated entryCreatedCallback) {
+        this.onEntryHolderCreatedCallback = entryCreatedCallback;
     }
 
     @Nullable
@@ -35,17 +30,14 @@ public class EntryHolderEditDialog extends AbstractDialog {
         this.configure(view);
 
         TextView header = view.findViewById(R.id.header);
-        header.setText("Liste editieren");
-        this.nameView.setText(this.toUpdate.getName());
+        header.setText("Liste anlegen");
 
         this.saveButton.setEnabled(false);
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EntryHolder holder = new EntryHolder(EntryHolderEditDialog.this.nameView.getText().toString());
-                holder.setId(EntryHolderEditDialog.this.toUpdate.getId());
-                EntryHolderEditDialog.this.onEntryHolderEditCallback.onEntryHolderEdit(holder, EntryHolderEditDialog.this.index);
-                EntryHolderEditDialog.this.dismiss();
+                onEntryHolderCreatedCallback.onEntryHolderCreated(nameView.getText().toString());
+                dismiss();
             }
         });
 
