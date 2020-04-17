@@ -28,7 +28,7 @@ import de.mycrocast.dtalisty.messaging.RequestManager;
 import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 
 public class OverviewActivity extends AppCompatActivity implements RecyclerClickListener, EntryHolderCreateDialog.OnEntryHolderCreated, EntryHolderEditDialog.OnEntryHolderEdit {
-    
+
     private EntryHolderAdapter holderAdapter;
     private List<EntryHolder> data;
     private RequestManager requestManager;

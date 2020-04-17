@@ -29,7 +29,7 @@ public class Entry extends AbstractIdentifiable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -37,7 +37,7 @@ public class Entry extends AbstractIdentifiable {
     }
 
     public long getCreationTime() {
-        return creationTime;
+        return this.creationTime;
     }
 
     public void setCreationTime(long creationTime) {
@@ -45,7 +45,7 @@ public class Entry extends AbstractIdentifiable {
     }
 
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 
     public void setActive(boolean active) {
@@ -53,7 +53,7 @@ public class Entry extends AbstractIdentifiable {
     }
 
     public Priority getPriority() {
-        return priority;
+        return this.priority;
     }
 
     public void setPriority(Priority priority) {

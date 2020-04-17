@@ -185,6 +185,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
     public void onEntryClick(View view, int entryIndex) {
         final Entry entry = this.entryData.get(entryIndex);
 
+        // TODO: change active-state of entry in the backend server via changeEntryStatus in RequestManager
+
         entry.setActive(!entry.isActive());
         this.sortEntries();
 
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MainActivity.this.requestManager.deleteEntry(entry.getId(), new Response.Listener<BasicResponse<Entry>>() {
+                        MainActivity.this.requestManager.deleteEntry(entry.getId(), MainActivity.this.entryHolderId, new Response.Listener<BasicResponse<Entry>>() {
                             @Override
                             public void onResponse(BasicResponse<Entry> response) {
                                 if (response.getError() == null || response.getError().isEmpty()) {

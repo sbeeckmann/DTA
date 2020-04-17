@@ -18,7 +18,7 @@ public class EntryHolder extends AbstractIdentifiable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -26,7 +26,7 @@ public class EntryHolder extends AbstractIdentifiable {
     }
 
     public List<Entry> getEntries() {
-        return entries;
+        return this.entries;
     }
 
     public void setEntries(List<Entry> entries) {
