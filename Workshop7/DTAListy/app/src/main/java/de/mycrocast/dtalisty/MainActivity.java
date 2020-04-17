@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_main);
 
         FloatingActionButton fab = this.findViewById(R.id.addButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +65,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
         this.entryAdapter.setClickListener(this);
 
         this.requestManager = new RequestManager(this);
-        this.entryRecyclerView.setAdapter(entryAdapter);
+        this.entryRecyclerView.setAdapter(this.entryAdapter);
 
         this.sortEntries();
 
         this.entryHolderId = this.getIntent().getExtras().getLong("list");
-        System.out.println(entryHolderId);
+        System.out.println(this.entryHolderId);
     }
 
     private void sortEntries() {
@@ -201,12 +201,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        requestManager.deleteEntry(entry.getId(), new Response.Listener<BasicResponse<Entry>>() {
+                        MainActivity.this.requestManager.deleteEntry(entry.getId(), new Response.Listener<BasicResponse<Entry>>() {
                             @Override
                             public void onResponse(BasicResponse<Entry> response) {
                                 if (response.getError() == null || response.getError().isEmpty()) {
-                                    entryData.remove(entryIndex);
-                                    entryAdapter.notifyItemRemoved(entryIndex);
+                                    MainActivity.this.entryData.remove(entryIndex);
+                                    MainActivity.this.entryAdapter.notifyItemRemoved(entryIndex);
                                     Toast.makeText(MainActivity.this, "Erfolgreich gelöscht", Toast.LENGTH_SHORT).show();
                                 } else {
                                     //TODO something more to show there was an error
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
 
     @Override
     public void onEditClick(View view, int entryIndex) {
-        Entry entryToUpdate = entryData.get(entryIndex);
+        Entry entryToUpdate = this.entryData.get(entryIndex);
         FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
         EntryEditDialog entryEditDialog = new EntryEditDialog(MainActivity.this, entryToUpdate, entryIndex);
 
@@ -242,9 +242,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
             @Override
             public void onResponse(BasicResponse<Entry> response) {
                 if (response.getError() == null || response.getError().isEmpty()) {
-                    entryData.add(new Entry(name, priority));
-                    sortEntries();
-                    entryAdapter.notifyDataSetChanged();
+                    MainActivity.this.entryData.add(new Entry(name, priority));
+                    MainActivity.this.sortEntries();
+                    MainActivity.this.entryAdapter.notifyDataSetChanged();
                     Toast.makeText(MainActivity.this, "Erfolgreich erstellt", Toast.LENGTH_SHORT).show();
                 } else {
                     //TODO something more to show there was an error

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,16 +38,21 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
+        this.setContentView(R.layout.activity_overview);
 
         this.data = new ArrayList<>();
         this.requestManager = new RequestManager(this);
         this.requestManager.getEntries(new Response.Listener<BasicResponse<List<EntryHolder>>>() {
             @Override
             public void onResponse(BasicResponse<List<EntryHolder>> response) {
-                data.clear();
-                data.addAll(response.getResponseData());
-                holderAdapter.notifyDataSetChanged();
+                if (response.getError() == null || response.getError().isEmpty()) {
+                    OverviewActivity.this.data.clear();
+                    OverviewActivity.this.data.addAll(response.getResponseData());
+                    OverviewActivity.this.holderAdapter.notifyDataSetChanged();
+                } else {
+                    //TODO something more to show there was an error
+                    Toast.makeText(OverviewActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -99,8 +105,8 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        data.remove(entryHolder);
-                        holderAdapter.notifyItemRemoved(entryIndex);
+                        OverviewActivity.this.data.remove(entryHolder);
+                        OverviewActivity.this.holderAdapter.notifyItemRemoved(entryIndex);
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)
@@ -109,10 +115,9 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
 
     @Override
     public void onEditClick(View view, int entryIndex) {
-        EntryHolder toUpdate = data.get(entryIndex);
+        EntryHolder toUpdate = this.data.get(entryIndex);
         FragmentManager fragmentManager = OverviewActivity.this.getSupportFragmentManager();
         EntryHolderEditDialog entryHolderEditDialog = new EntryHolderEditDialog(OverviewActivity.this, toUpdate, entryIndex);
-
         entryHolderEditDialog.setCancelable(false);
         entryHolderEditDialog.show(fragmentManager, "entryHolderEdit");
     }
@@ -122,8 +127,8 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
         EntryHolder holder = new EntryHolder();
         holder.setName(name);
 
-        data.add(holder);
-        holderAdapter.notifyDataSetChanged();
+        this.data.add(holder);
+        this.holderAdapter.notifyDataSetChanged();
     }
 
     @Override
