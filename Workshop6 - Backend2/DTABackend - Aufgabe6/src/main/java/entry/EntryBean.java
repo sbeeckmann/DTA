@@ -161,7 +161,7 @@ public class EntryBean {
             }
             entry.setActive(request.isActive());
             response.setResponseData(entry);
-            objectMapper.writeValueAsString(response);
+            return objectMapper.writeValueAsString(response);
         } catch (JsonProcessingException ex) {
 
         }
