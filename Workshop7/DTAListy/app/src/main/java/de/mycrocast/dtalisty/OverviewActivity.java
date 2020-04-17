@@ -103,6 +103,8 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // TODO: Create a new deleteEntryHolder method in RequestManager, that sends the DeleteEntryHolderRequest to the backend server
+
                         OverviewActivity.this.data.remove(entryHolder);
                         OverviewActivity.this.holderAdapter.notifyItemRemoved(entryIndex);
                     }
@@ -122,6 +124,8 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
 
     @Override
     public void onEntryHolderCreated(String name) {
+        // TODO: Create a new createEntryHolder method in RequestManager, that sends the CreateEntryHolderRequest to the backend server
+
         EntryHolder holder = new EntryHolder();
         holder.setName(name);
 
@@ -131,6 +135,8 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
 
     @Override
     public void onEntryHolderEdit(EntryHolder name, int index) {
+        // TODO: Create a new editEntryHolder method in RequestManager, that sends the EditEntryHolderRequest to the backend server
+
         this.data.set(index, name);
 
         this.holderAdapter.notifyDataSetChanged();

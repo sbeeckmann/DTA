@@ -264,6 +264,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
 
     @Override
     public void onEntryEdited(Entry updatedEntry, int index) {
+        // TODO: update edited entry in the backend server via updateEntry in RequestManager
+
         this.entryData.set(index, updatedEntry);
         this.sortEntries();
 

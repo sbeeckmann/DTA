@@ -40,10 +40,12 @@ public class RequestManager {
 
     public void updateEntry(long entryId, String name, Entry.Priority priority,
                             Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
+        // TODO: send the UpdateEntryRequest to the backend server with the given parameters (UpdateEntryRequestParameter)
     }
 
     public void changeEntryStatus(long entryId, boolean isActive,
                                   Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
+        // TODO: send the ChangeEntryStatusRequest to the backend server with the given parameters (ChangeEntryStatusRequestParameter)
     }
 
     public void deleteEntry(long entryId, long entryHolderId, Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
