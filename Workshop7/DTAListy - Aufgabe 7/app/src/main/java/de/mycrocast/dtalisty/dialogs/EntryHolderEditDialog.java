@@ -38,7 +38,6 @@ public class EntryHolderEditDialog extends AbstractDialog {
         header.setText("Liste editieren");
         this.nameView.setText(this.toUpdate.getName());
 
-
         this.saveButton.setEnabled(false);
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
