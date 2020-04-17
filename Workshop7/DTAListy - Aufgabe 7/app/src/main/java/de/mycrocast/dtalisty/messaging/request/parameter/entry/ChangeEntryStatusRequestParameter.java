@@ -1,4 +1,4 @@
-package de.mycrocast.dtalisty.messaging.request.parameter;
+package de.mycrocast.dtalisty.messaging.request.parameter.entry;
 
 public class ChangeEntryStatusRequestParameter {
     private long entryId;

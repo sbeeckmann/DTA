@@ -27,7 +27,7 @@ public abstract class AbstractDialog extends DialogFragment {
         this.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                AbstractDialog.this.dismiss();
             }
         });
 
@@ -42,10 +42,10 @@ public abstract class AbstractDialog extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (nameView.getText().toString().isEmpty()) {
-                    saveButton.setEnabled(false);
+                if (AbstractDialog.this.nameView.getText().toString().isEmpty()) {
+                    AbstractDialog.this.saveButton.setEnabled(false);
                 } else {
-                    saveButton.setEnabled(true);
+                    AbstractDialog.this.saveButton.setEnabled(true);
                 }
             }
         });

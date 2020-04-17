@@ -182,15 +182,31 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
     }
 
     @Override
-    public void onEntryClick(View view, int entryIndex) {
-        final Entry entry = this.entryData.get(entryIndex);
+    public void onEntryClick(View view, final int entryIndex) {
+        Entry entry = this.entryData.get(entryIndex);
 
-        // TODO: change active-state of entry in the backend server via changeEntryStatus in RequestManager
+        this.requestManager.changeEntryStatus(entry.getId(), !entry.isActive(), new Response.Listener<BasicResponse<Entry>>() {
+            @Override
+            public void onResponse(BasicResponse<Entry> response) {
+                if (response.getError() == null || response.getError().isEmpty()) {
+                    MainActivity.this.entryData.set(entryIndex, response.getResponseData());
+                    MainActivity.this.sortEntries();
 
-        entry.setActive(!entry.isActive());
-        this.sortEntries();
+                    MainActivity.this.entryAdapter.notifyDataSetChanged();
 
-        this.entryAdapter.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this, "Erfolgreich Entry-Status geändert", Toast.LENGTH_SHORT).show();
+                } else {
+                    //TODO something more to show there was an error
+                    Toast.makeText(MainActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO inform the user about the error
+                System.out.println(error.getMessage());
+            }
+        });
     }
 
     @Override
@@ -208,7 +224,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
                             public void onResponse(BasicResponse<Entry> response) {
                                 if (response.getError() == null || response.getError().isEmpty()) {
                                     MainActivity.this.entryData.remove(entryIndex);
+
                                     MainActivity.this.entryAdapter.notifyItemRemoved(entryIndex);
+
                                     Toast.makeText(MainActivity.this, "Erfolgreich gelöscht", Toast.LENGTH_SHORT).show();
                                 } else {
                                     //TODO something more to show there was an error
@@ -246,7 +264,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
                 if (response.getError() == null || response.getError().isEmpty()) {
                     MainActivity.this.entryData.add(new Entry(name, priority));
                     MainActivity.this.sortEntries();
+
                     MainActivity.this.entryAdapter.notifyDataSetChanged();
+
                     Toast.makeText(MainActivity.this, "Erfolgreich erstellt", Toast.LENGTH_SHORT).show();
                 } else {
                     //TODO something more to show there was an error
@@ -263,10 +283,28 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
     }
 
     @Override
-    public void onEntryEdited(Entry updatedEntry, int index) {
-        this.entryData.set(index, updatedEntry);
-        this.sortEntries();
+    public void onEntryEdited(Entry updatedEntry, final int index) {
+        this.requestManager.updateEntry(updatedEntry.getId(), updatedEntry.getName(), updatedEntry.getPriority(), new Response.Listener<BasicResponse<Entry>>() {
+            @Override
+            public void onResponse(BasicResponse<Entry> response) {
+                if (response.getError() == null || response.getError().isEmpty()) {
+                    MainActivity.this.entryData.set(index, response.getResponseData());
+                    MainActivity.this.sortEntries();
 
-        this.entryAdapter.notifyDataSetChanged();
+                    MainActivity.this.entryAdapter.notifyDataSetChanged();
+
+                    Toast.makeText(MainActivity.this, "Erfolgreich editiert", Toast.LENGTH_SHORT).show();
+                } else {
+                    //TODO something more to show there was an error
+                    Toast.makeText(MainActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO inform the user about the error
+                System.out.println(error.getMessage());
+            }
+        });
     }
 }

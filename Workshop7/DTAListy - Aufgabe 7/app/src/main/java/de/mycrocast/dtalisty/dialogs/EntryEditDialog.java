@@ -16,7 +16,7 @@ import de.mycrocast.dtalisty.data.Entry;
 public class EntryEditDialog extends AbstractDialog {
 
     public interface OnEntryEdited {
-        void onEntryEdited(Entry updatedEntry, int index);
+        void onEntryEdited(Entry updatedEntry, final int index);
     }
 
     private RadioGroup radioGroup;

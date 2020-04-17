@@ -15,8 +15,13 @@ import de.mycrocast.dtalisty.data.Entry;
 import de.mycrocast.dtalisty.data.EntryHolder;
 import de.mycrocast.dtalisty.messaging.request.GetRequest;
 import de.mycrocast.dtalisty.messaging.request.PostRequest;
-import de.mycrocast.dtalisty.messaging.request.parameter.CreateEntryRequestParameter;
-import de.mycrocast.dtalisty.messaging.request.parameter.DeleteEntryRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entry.ChangeEntryStatusRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entry.CreateEntryRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entry.DeleteEntryRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entry.UpdateEntryRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entryHolder.CreateEntryHolderRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entryHolder.DeleteEntryHolderRequestParameter;
+import de.mycrocast.dtalisty.messaging.request.parameter.entryHolder.EditEntryHolderRequestParameter;
 import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 
 public class RequestManager {
@@ -40,10 +45,26 @@ public class RequestManager {
 
     public void updateEntry(long entryId, String name, Entry.Priority priority,
                             Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
+        String url = "http://192.168.0.18:8080/rest/entry/updateEntry";
+
+        UpdateEntryRequestParameter requestParameter = new UpdateEntryRequestParameter(entryId, name, priority);
+        String body = new Gson().toJson(requestParameter);
+
+        Type type = new TypeToken<BasicResponse<Entry>>() {}.getType();
+        PostRequest<BasicResponse<Entry>> postRequest = new PostRequest<>(url, body, type, successListener, errorListener);
+        this.requestQueue.add(postRequest);
     }
 
     public void changeEntryStatus(long entryId, boolean isActive,
                                   Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
+        String url = "http://192.168.0.18:8080/rest/entry/changeEntryStatus";
+
+        ChangeEntryStatusRequestParameter requestParameter = new ChangeEntryStatusRequestParameter(entryId, isActive);
+        String body = new Gson().toJson(requestParameter);
+
+        Type type = new TypeToken<BasicResponse<Entry>>() {}.getType();
+        PostRequest<BasicResponse<Entry>> postRequest = new PostRequest<>(url, body, type, successListener, errorListener);
+        this.requestQueue.add(postRequest);
     }
 
     public void deleteEntry(long entryId, long entryHolderId, Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
@@ -63,5 +84,38 @@ public class RequestManager {
         Type type = new TypeToken<BasicResponse<List<EntryHolder>>>() {}.getType();
         GetRequest<BasicResponse<List<EntryHolder>>> getRequest = new GetRequest<>(url, type, successListener, errorListener);
         this.requestQueue.add(getRequest);
+    }
+
+    public void createEntryHolder(String name, Response.Listener<BasicResponse<EntryHolder>> successListener, Response.ErrorListener errorListener) {
+        String url = "http://192.168.0.18:8080/rest/entry/createEntryHolder";
+
+        CreateEntryHolderRequestParameter requestParameter = new CreateEntryHolderRequestParameter(name);
+        String body = new Gson().toJson(requestParameter);
+
+        Type type = new TypeToken<BasicResponse<Entry>>() {}.getType();
+        PostRequest<BasicResponse<EntryHolder>> postRequest = new PostRequest<>(url, body, type, successListener, errorListener);
+        this.requestQueue.add(postRequest);
+    }
+
+    public void editEntryHolder(long entryHolderId, String name, Response.Listener<BasicResponse<EntryHolder>> successListener, Response.ErrorListener errorListener) {
+        String url = "http://192.168.0.18:8080/rest/entry/editEntryHolder";
+
+        EditEntryHolderRequestParameter requestParameter = new EditEntryHolderRequestParameter(entryHolderId, name);
+        String body = new Gson().toJson(requestParameter);
+
+        Type type = new TypeToken<BasicResponse<Entry>>() {}.getType();
+        PostRequest<BasicResponse<EntryHolder>> postRequest = new PostRequest<>(url, body, type, successListener, errorListener);
+        this.requestQueue.add(postRequest);
+    }
+
+    public void deleteEntryHolder(long entryHolderId, Response.Listener<BasicResponse<EntryHolder>> successListener, Response.ErrorListener errorListener) {
+        String url = "http://192.168.0.18:8080/rest/entry/deleteEntryHolder";
+
+        DeleteEntryHolderRequestParameter requestParameter = new DeleteEntryHolderRequestParameter(entryHolderId);
+        String body = new Gson().toJson(requestParameter);
+
+        Type type = new TypeToken<BasicResponse<Entry>>() {}.getType();
+        PostRequest<BasicResponse<EntryHolder>> postRequest = new PostRequest<>(url, body, type, successListener, errorListener);
+        this.requestQueue.add(postRequest);
     }
 }

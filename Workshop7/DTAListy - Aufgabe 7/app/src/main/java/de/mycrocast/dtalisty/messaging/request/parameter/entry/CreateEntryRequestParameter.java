@@ -1,25 +1,25 @@
-package de.mycrocast.dtalisty.messaging.request.parameter;
+package de.mycrocast.dtalisty.messaging.request.parameter.entry;
 
 import de.mycrocast.dtalisty.data.Entry;
 
-public class UpdateEntryRequestParameter {
+public class CreateEntryRequestParameter {
 
-    private long entryId;
+    private long entryHolderId;
     private String name;
     private Entry.Priority priority;
 
-    public UpdateEntryRequestParameter(long entryId, String name, Entry.Priority priority) {
-        this.entryId = entryId;
+    public CreateEntryRequestParameter(long entryHolderId, String name, Entry.Priority priority) {
+        this.entryHolderId = entryHolderId;
         this.name = name;
         this.priority = priority;
     }
 
-    public long getEntryId() {
-        return this.entryId;
+    public long getEntryHolderId() {
+        return this.entryHolderId;
     }
 
-    public void setEntryId(long entryId) {
-        this.entryId = entryId;
+    public void setEntryHolderId(long entryHolderId) {
+        this.entryHolderId = entryHolderId;
     }
 
     public String getName() {

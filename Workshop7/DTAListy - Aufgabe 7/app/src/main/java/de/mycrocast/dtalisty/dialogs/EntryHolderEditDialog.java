@@ -15,7 +15,7 @@ import de.mycrocast.dtalisty.data.EntryHolder;
 public class EntryHolderEditDialog extends AbstractDialog {
 
     public interface OnEntryHolderEdit {
-        void onEntryHolderEdit(EntryHolder name, int index);
+        void onEntryHolderEdit(EntryHolder name, final int index);
     }
 
     private OnEntryHolderEdit onEntryHolderEditCallback;
@@ -43,8 +43,8 @@ public class EntryHolderEditDialog extends AbstractDialog {
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onEntryHolderEditCallback.onEntryHolderEdit(new EntryHolder(nameView.getText().toString()), index);
-                dismiss();
+                EntryHolderEditDialog.this.onEntryHolderEditCallback.onEntryHolderEdit(new EntryHolder(EntryHolderEditDialog.this.nameView.getText().toString()), EntryHolderEditDialog.this.index);
+                EntryHolderEditDialog.this.dismiss();
             }
         });
 

@@ -29,9 +29,9 @@ import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 
 public class OverviewActivity extends AppCompatActivity implements RecyclerClickListener, EntryHolderCreateDialog.OnEntryHolderCreated, EntryHolderEditDialog.OnEntryHolderEdit {
 
+    private RequestManager requestManager;
     private EntryHolderAdapter holderAdapter;
     private List<EntryHolder> data;
-    private RequestManager requestManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +103,26 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        OverviewActivity.this.data.remove(entryHolder);
-                        OverviewActivity.this.holderAdapter.notifyItemRemoved(entryIndex);
+                        OverviewActivity.this.requestManager.deleteEntryHolder(entryHolder.getId(), new Response.Listener<BasicResponse<EntryHolder>>() {
+                            @Override
+                            public void onResponse(BasicResponse<EntryHolder> response) {
+                                if (response.getError() == null || response.getError().isEmpty()) {
+                                    OverviewActivity.this.data.remove(entryHolder);
+                                    OverviewActivity.this.holderAdapter.notifyItemRemoved(entryIndex);
+
+                                    Toast.makeText(OverviewActivity.this, "EntryHolder erfolgreich entfernt", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    //TODO: something more to show there was an error
+                                    Toast.makeText(OverviewActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO: show meaningful message to the end user for feedback
+                                System.out.println(error.getMessage());
+                            }
+                        });
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)
@@ -122,17 +140,49 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
 
     @Override
     public void onEntryHolderCreated(String name) {
-        EntryHolder holder = new EntryHolder();
-        holder.setName(name);
+        this.requestManager.createEntryHolder(name, new Response.Listener<BasicResponse<EntryHolder>>() {
+            @Override
+            public void onResponse(BasicResponse<EntryHolder> response) {
+                if (response.getError() == null || response.getError().isEmpty()) {
+                    OverviewActivity.this.data.add(response.getResponseData());
+                    OverviewActivity.this.holderAdapter.notifyDataSetChanged();
 
-        this.data.add(holder);
-        this.holderAdapter.notifyDataSetChanged();
+                    Toast.makeText(OverviewActivity.this, "EntryHolder erfolgreich erstellt", Toast.LENGTH_SHORT).show();
+                } else {
+                    //TODO: something more to show there was an error
+                    Toast.makeText(OverviewActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: show meaningful message to the end user for feedback
+                System.out.println(error.getMessage());
+            }
+        });
     }
 
     @Override
-    public void onEntryHolderEdit(EntryHolder name, int index) {
-        this.data.set(index, name);
+    public void onEntryHolderEdit(EntryHolder entryHolder, final int index) {
+        this.requestManager.editEntryHolder(entryHolder.getId(), entryHolder.getName(), new Response.Listener<BasicResponse<EntryHolder>>() {
+            @Override
+            public void onResponse(BasicResponse<EntryHolder> response) {
+                if (response.getError() == null || response.getError().isEmpty()) {
+                    OverviewActivity.this.data.set(index, response.getResponseData());
+                    OverviewActivity.this.holderAdapter.notifyDataSetChanged();
 
-        this.holderAdapter.notifyDataSetChanged();
+                    Toast.makeText(OverviewActivity.this, "EntryHolder erfolgreich editiert", Toast.LENGTH_SHORT).show();
+                } else {
+                    //TODO: something more to show there was an error
+                    Toast.makeText(OverviewActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: show meaningful message to the end user for feedback
+                System.out.println(error.getMessage());
+            }
+        });
     }
 }
