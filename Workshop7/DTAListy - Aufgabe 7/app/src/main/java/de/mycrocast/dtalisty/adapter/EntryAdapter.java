@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -84,6 +86,98 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         this.clickListener = entryClickListener;
     }
 
+    public Entry getByPosition(int position) {
+        if (position < 0 || position >= this.entries.size()) {
+            return null;
+        }
+
+        return this.entries.get(position);
+    }
+
+    public void sortEntries() {
+        Collections.sort(this.entries, new Comparator<Entry>() {
+            @Override
+            public int compare(Entry o1, Entry o2) {
+                switch (o1.getPriority()) {
+                    case HIGH: {
+                        if (!o1.isActive() && !o2.isActive()) {
+                            if (o2.getPriority() != Entry.Priority.HIGH) {
+                                return -1;
+                            }
+                            return 0;
+                        }
+                        if (o1.isActive() && !o2.isActive()) {
+                            return -1;
+                        }
+
+                        if (!o1.isActive() && o2.isActive()) {
+                            return 1;
+                        }
+                        if (o1.isActive() && o2.isActive()) {
+                            if (o2.getPriority() == Entry.Priority.HIGH) {
+                                return 0;
+                            }
+                            return -1;
+                        }
+                        break;
+                    }
+                    case MEDIUM: {
+                        if (!o1.isActive() && !o2.isActive()) {
+                            if (o2.getPriority() == Entry.Priority.MEDIUM) {
+                                return 0;
+                            }
+                            if (o2.getPriority() == Entry.Priority.HIGH) {
+                                return 1;
+                            }
+                            return -1;
+                        }
+                        if (o1.isActive() && !o2.isActive()) {
+                            return -1;
+                        }
+                        if (!o1.isActive() && o2.isActive()) {
+                            return 1;
+                        }
+                        if (o1.isActive() && o2.isActive()) {
+                            if (o2.getPriority() == Entry.Priority.HIGH) {
+                                return 1;
+                            }
+                            if (o2.getPriority() == Entry.Priority.LOW) {
+                                return -1;
+                            }
+                            return 0;
+                        }
+                        break;
+                    }
+                    case LOW: {
+                        if (!o1.isActive() && !o2.isActive()) {
+                            if (o2.getPriority() == Entry.Priority.LOW) {
+                                return 0;
+                            }
+                            return 1;
+                        }
+                        if (o1.isActive() && !o2.isActive()) {
+                            return -1;
+                        }
+                        if (!o1.isActive() && o2.isActive()) {
+                            return 1;
+                        }
+                        if (o1.isActive() && o2.isActive()) {
+                            if (o2.getPriority() == Entry.Priority.LOW) {
+                                return 0;
+                            }
+                            return 1;
+                        }
+                        break;
+                    }
+                    default: {
+                        return 0;
+                    }
+                }
+                return 0;
+            }
+        });
+    }
+
     public class EntryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView entryContent;
@@ -132,10 +226,12 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
                     EntryAdapter.this.clickListener.onDeleteClick(v, this.getAdapterPosition());
                     return;
                 }
+
                 if (v == this.editButton) {
                     EntryAdapter.this.clickListener.onEditClick(v, this.getAdapterPosition());
                     return;
                 }
+
                 EntryAdapter.this.clickListener.onEntryClick(v, this.getAdapterPosition());
             }
         }
