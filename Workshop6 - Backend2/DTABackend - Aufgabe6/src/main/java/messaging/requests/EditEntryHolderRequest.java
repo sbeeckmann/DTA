@@ -1,17 +1,9 @@
 package messaging.requests;
 
-public class DeleteEntryRequest {
+public class EditEntryHolderRequest {
 
-    private long entryId;
     private long entryHolderId;
-
-    public long getEntryId() {
-        return entryId;
-    }
-
-    public void setEntryId(long entryId) {
-        this.entryId = entryId;
-    }
+    private String name;
 
     public long getEntryHolderId() {
         return entryHolderId;
@@ -19,5 +11,13 @@ public class DeleteEntryRequest {
 
     public void setEntryHolderId(long entryHolderId) {
         this.entryHolderId = entryHolderId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

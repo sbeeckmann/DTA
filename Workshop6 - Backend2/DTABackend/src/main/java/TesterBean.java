@@ -7,7 +7,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @LocalBean
@@ -59,7 +58,6 @@ public class TesterBean {
         }
 
         List<Entry> totalEntries = this.em.createQuery("Select e from Entry e", Entry.class).getResultList();
-
         List<EntryHolder> holders = this.em.createQuery("Select eh from EntryHolder eh", EntryHolder.class).getResultList();
         if (holders.isEmpty()) {
             EntryHolder holder = new EntryHolder();

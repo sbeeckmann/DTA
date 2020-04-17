@@ -29,6 +29,14 @@ public class EntryService {
     }
 
     @POST
+    @Path("changeEntryStatus")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String changeEntryStatus(ChangeEntryStatusRequest request) {
+        return this.entryBean.onChangeEntryStatusRequest(request);
+    }
+
+    @POST
     @Path("createEntry")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,8 +56,16 @@ public class EntryService {
     @Path("deleteEntryHolder")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteEntryList(DeleteEntryHolderRequest request) {
+    public String deleteEntryHolder(DeleteEntryHolderRequest request) {
         return this.entryBean.onDeleteEntryHolder(request);
+    }
+
+    @POST
+    @Path("editEntryHolder")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String editEntryHolder(EditEntryHolderRequest request) {
+        return this.entryBean.onEditEntryHolderRequest(request);
     }
 
     @GET
