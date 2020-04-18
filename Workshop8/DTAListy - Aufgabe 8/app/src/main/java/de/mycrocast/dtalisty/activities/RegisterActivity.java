@@ -1,5 +1,6 @@
 package de.mycrocast.dtalisty.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,7 +20,11 @@ import de.mycrocast.dtalisty.data.User;
 import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 import de.mycrocast.dtalisty.messaging.restcaller.UserRestCaller;
 
-public class LoginActivity extends AbstractActivity implements View.OnClickListener {
+public class RegisterActivity extends AbstractActivity implements View.OnClickListener {
+
+    public static Intent createStartIntent(Context context) {
+        return new Intent(context, RegisterActivity.class);
+    }
 
     private UserRestCaller userRestCaller;
 
@@ -27,25 +32,31 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
     private boolean usernameErrorEnabled;
     // are we currently showing an error message in the password input field?
     private boolean passwordErrorEnabled;
+    // are we currently showing an error message in the confirm password input field?
+    private boolean confirmPasswordErrorEnabled;
 
     private TextInputLayout usernameInputLayout;
     private TextInputLayout passwordInputLayout;
+    private TextInputLayout confirmPasswordInputLayout;
+
     private TextInputEditText usernameInput;
     private TextInputEditText passwordInput;
-    private AppCompatButton loginButton;
+    private TextInputEditText confirmPasswordInput;
+
     private AppCompatButton registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_login);
+        this.setContentView(R.layout.activity_register);
 
         this.userRestCaller = this.getUserRestCaller();
 
-        this.usernameInputLayout = this.findViewById(R.id.input_username);
-        this.passwordInputLayout = this.findViewById(R.id.input_password);
+        this.usernameInputLayout = this.findViewById(R.id.input_register_username);
+        this.passwordInputLayout = this.findViewById(R.id.input_register_password);
+        this.confirmPasswordInputLayout = this.findViewById(R.id.input_register_confirm_password);
 
-        this.usernameInput = this.findViewById(R.id.text_username);
+        this.usernameInput = this.findViewById(R.id.text_register_username);
         this.usernameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -59,17 +70,17 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
             public void afterTextChanged(Editable s) {
                 // we want to clear the error message (if we are currently showing one), when we have some input in our input field
                 if (!s.toString().isEmpty()) {
-                    if (LoginActivity.this.usernameErrorEnabled) {
-                        LoginActivity.this.usernameErrorEnabled = false;
+                    if (RegisterActivity.this.usernameErrorEnabled) {
+                        RegisterActivity.this.usernameErrorEnabled = false;
 
-                        LoginActivity.this.usernameInputLayout.setErrorEnabled(false);
-                        LoginActivity.this.usernameInputLayout.setError(null);
+                        RegisterActivity.this.usernameInputLayout.setErrorEnabled(false);
+                        RegisterActivity.this.usernameInputLayout.setError(null);
                     }
                 }
             }
         });
 
-        this.passwordInput = this.findViewById(R.id.text_password);
+        this.passwordInput = this.findViewById(R.id.text_register_password);
         this.passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -83,39 +94,58 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
             public void afterTextChanged(Editable s) {
                 // we want to clear the error message (if we are currently showing one), when we have some input in our input field
                 if (!s.toString().isEmpty()) {
-                    if (LoginActivity.this.passwordErrorEnabled) {
-                        LoginActivity.this.passwordErrorEnabled = false;
+                    if (RegisterActivity.this.passwordErrorEnabled) {
+                        RegisterActivity.this.passwordErrorEnabled = false;
 
-                        LoginActivity.this.passwordInputLayout.setErrorEnabled(false);
-                        LoginActivity.this.passwordInputLayout.setError(null);
+                        RegisterActivity.this.passwordInputLayout.setErrorEnabled(false);
+                        RegisterActivity.this.passwordInputLayout.setError(null);
                     }
                 }
             }
         });
 
-        this.loginButton = this.findViewById(R.id.button_login);
-        this.loginButton.setOnClickListener(this);
+        this.confirmPasswordInput = this.findViewById(R.id.text_register_confirm_password);
+        this.confirmPasswordInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        this.registerButton = this.findViewById(R.id.button_register);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // we want to clear the error message (if we are currently showing one), when we the confirmed password matches with the entered password
+                if (s.toString().equals(RegisterActivity.this.passwordInput.getEditableText().toString())) {
+                    if (RegisterActivity.this.confirmPasswordErrorEnabled) {
+                        RegisterActivity.this.confirmPasswordErrorEnabled = false;
+
+                        RegisterActivity.this.confirmPasswordInputLayout.setErrorEnabled(false);
+                        RegisterActivity.this.confirmPasswordInputLayout.setError(null);
+                    }
+                }
+            }
+        });
+
+        this.registerButton = this.findViewById(R.id.button_register_user);
         this.registerButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View clickedView) {
-        // did we click on the login button?
-        if (clickedView.getId() == this.loginButton.getId()) {
-            this.onLoginClicked();
-        }
-
         // did we click on the register button?
         if (clickedView.getId() == this.registerButton.getId()) {
             this.onRegisterClicked();
         }
     }
 
-    private void onLoginClicked() {
+    private void onRegisterClicked() {
         String username = this.usernameInput.getEditableText().toString();
         String password = this.passwordInput.getEditableText().toString();
+        String confirmedPassword = this.confirmPasswordInput.getEditableText().toString();
 
         // do we need to display the error message? (we want to display the error message if we have no text in the input field)
         if (username.isEmpty()) {
@@ -161,18 +191,40 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
             }
         }
 
+        // do we need to display the error message? (we want to display the error message if the entered confirmed password does not match with the entered password)
+        if (!confirmedPassword.equals(password)) {
+            // do we already show the error message? -> yes: nothing needs to be done
+            if (!this.confirmPasswordErrorEnabled) {
+                // no -> show the error message
+                this.confirmPasswordErrorEnabled = true;
+
+                String errorText = this.getResources().getString(R.string.error_password_mismatch);
+                this.confirmPasswordInputLayout.setError(errorText);
+                this.confirmPasswordInputLayout.setErrorEnabled(true);
+            }
+        } else {
+            // do we show the error message?
+            if (this.confirmPasswordErrorEnabled) {
+                // yes -> dismiss the previous shown error message
+                this.confirmPasswordErrorEnabled = false;
+
+                this.confirmPasswordInputLayout.setErrorEnabled(false);
+                this.confirmPasswordInputLayout.setError(null);
+            }
+        }
+
         // if both input fields have valid input, we want to send the login request to our backend server
-        if (!this.usernameErrorEnabled && !this.passwordErrorEnabled) {
-            this.userRestCaller.authenticate(username, password, new Response.Listener<BasicResponse<User>>() {
+        if (!this.usernameErrorEnabled && !this.passwordErrorEnabled && !this.confirmPasswordErrorEnabled) {
+            this.userRestCaller.register(username, password, new Response.Listener<BasicResponse<User>>() {
                 @Override
                 public void onResponse(BasicResponse<User> response) {
                     if (response.getError() == null || response.getError().isEmpty()) {
-                        Intent intent = MainActivity.createStartIntent(LoginActivity.this);
-                        LoginActivity.this.startActivity(intent);
-                        LoginActivity.this.finish();
+                        Intent intent = MainActivity.createStartIntent(RegisterActivity.this);
+                        RegisterActivity.this.startActivity(intent);
+                        RegisterActivity.this.finish();
                     } else {
                         //TODO something more to show there was an error
-                        Toast.makeText(LoginActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -183,10 +235,5 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
                 }
             });
         }
-    }
-
-    private void onRegisterClicked() {
-        Intent intent = RegisterActivity.createStartIntent(this);
-        this.startActivity(intent);
     }
 }

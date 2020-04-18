@@ -91,7 +91,7 @@ public class UserBean {
             response.setError("Authentication failed");
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException | NoSuchAlgorithmException ex) {
-
+            ex.printStackTrace();
         }
 
         return "";

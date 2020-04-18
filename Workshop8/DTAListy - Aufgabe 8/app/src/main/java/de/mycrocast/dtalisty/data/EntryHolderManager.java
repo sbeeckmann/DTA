@@ -32,7 +32,9 @@ public class EntryHolderManager {
 
         if (entryHolderList != null) {
             for (EntryHolder entryHolder : entryHolderList) {
-                this.add(entryHolder);
+                if (entryHolder != null) {
+                    this.entryHolders.put(entryHolder.getId(), entryHolder);
+                }
             }
         }
     }

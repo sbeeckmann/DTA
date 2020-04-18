@@ -7,4 +7,5 @@
     <string name="error_username_empty">Username can not be empty.</string>
     <string name="error_password_empty">Password can not be empty.</string>
     <string name="error_password_mismatch">Passwords do not match.</string>
+    <string name="hint_confirm_password">Confirm Password</string>
 </resources>

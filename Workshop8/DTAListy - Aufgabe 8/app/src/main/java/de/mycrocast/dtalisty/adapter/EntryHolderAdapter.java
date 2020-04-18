@@ -72,6 +72,7 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
 
     public void setEntryHolderList(List<EntryHolder> entryHolders) {
         this.entryHolderList.clear();
+
         for (EntryHolder entryHolder : entryHolders) {
             if (entryHolder != null) {
                 this.entryHolderList.add(entryHolder);

@@ -1,5 +1,6 @@
 package de.mycrocast.dtalisty.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,10 @@ import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 
 public class MainActivity extends AbstractActivity implements RecyclerClickListener, EntryHolderCreateDialog.OnEntryHolderCreated, EntryHolderEditDialog.OnEntryHolderEdit, EntryHolderManager.EntryHolderChangeListener {
 
+    public static Intent createStartIntent(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
+
     private EntryRestCaller entryRestCaller;
     private EntryHolderManager entryHolderManager;
     private EntryHolderAdapter holderAdapter;
@@ -45,7 +50,9 @@ public class MainActivity extends AbstractActivity implements RecyclerClickListe
             @Override
             public void onResponse(BasicResponse<List<EntryHolder>> response) {
                 if (response.getError() == null || response.getError().isEmpty()) {
-                    MainActivity.this.entryHolderManager.setEntryHolders(response.getResponseData());
+                    List<EntryHolder> entryHolderList = response.getResponseData();
+                    MainActivity.this.entryHolderManager.setEntryHolders(entryHolderList);
+                    MainActivity.this.holderAdapter.setEntryHolderList(entryHolderList);
                 } else {
                     //TODO something more to show there was an error
                     Toast.makeText(MainActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
@@ -96,10 +103,7 @@ public class MainActivity extends AbstractActivity implements RecyclerClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
-        this.holderAdapter.setEntryHolderList(this.entryHolderManager.getEntryHolders());
-        this.holderAdapter.notifyDataSetChanged();
-
+        
         this.entryHolderManager.addChangeListener(this);
     }
 
