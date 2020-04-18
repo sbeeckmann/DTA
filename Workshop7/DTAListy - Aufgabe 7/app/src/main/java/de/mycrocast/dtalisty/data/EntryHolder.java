@@ -42,10 +42,6 @@ public class EntryHolder extends AbstractIdentifiable {
         return this.entries;
     }
 
-    public void setEntries(List<Entry> entries) {
-        this.entries = entries;
-    }
-
     public void add(Entry entry) {
         if (entry != null) {
             this.entries.add(entry);

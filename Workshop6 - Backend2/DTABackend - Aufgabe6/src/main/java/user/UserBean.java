@@ -76,6 +76,7 @@ public class UserBean {
                 response.setError("Failed");
                 mapper.writeValueAsString(response);
             }
+
             User user = users.get(0);
             byte[] salt = user.getSalt();
 
@@ -86,9 +87,9 @@ public class UserBean {
                 response.setResponseData(user);
                 return mapper.writeValueAsString(response);
             }
+
             response.setError("Failed");
             return mapper.writeValueAsString(response);
-
         } catch (JsonProcessingException | NoSuchAlgorithmException ex) {
 
         }
