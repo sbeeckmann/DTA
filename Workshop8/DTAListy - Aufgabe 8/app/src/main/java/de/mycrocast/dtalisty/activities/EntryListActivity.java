@@ -37,7 +37,6 @@ public class EntryListActivity extends AbstractActivity implements RecyclerClick
 
     private RecyclerView entryRecyclerView;
     private EntryAdapter entryAdapter;
-
     private EntryRestCaller entryRestCaller;
     private EntryHolder entryHolder;
 

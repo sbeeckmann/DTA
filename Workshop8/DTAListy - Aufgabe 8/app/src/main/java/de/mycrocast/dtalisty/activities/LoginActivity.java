@@ -30,8 +30,10 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
 
     private TextInputLayout usernameInputLayout;
     private TextInputLayout passwordInputLayout;
+
     private TextInputEditText usernameInput;
     private TextInputEditText passwordInput;
+
     private AppCompatButton loginButton;
     private AppCompatButton registerButton;
 

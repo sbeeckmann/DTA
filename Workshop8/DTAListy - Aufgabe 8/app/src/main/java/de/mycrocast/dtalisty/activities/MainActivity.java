@@ -103,7 +103,7 @@ public class MainActivity extends AbstractActivity implements RecyclerClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        
+
         this.entryHolderManager.addChangeListener(this);
     }
 

@@ -118,7 +118,7 @@ public class RegisterActivity extends AbstractActivity implements View.OnClickLi
 
             @Override
             public void afterTextChanged(Editable s) {
-                // we want to clear the error message (if we are currently showing one), when we the confirmed password matches with the entered password
+                // we want to clear the error message (if we are currently showing one), when the confirmed password matches with the entered password
                 if (s.toString().equals(RegisterActivity.this.passwordInput.getEditableText().toString())) {
                     if (RegisterActivity.this.confirmPasswordErrorEnabled) {
                         RegisterActivity.this.confirmPasswordErrorEnabled = false;
