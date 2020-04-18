@@ -24,16 +24,20 @@ import de.mycrocast.dtalisty.messaging.request.parameter.entryHolder.DeleteEntry
 import de.mycrocast.dtalisty.messaging.request.parameter.entryHolder.EditEntryHolderRequestParameter;
 import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 
-public class RequestManager {
-    private final RequestQueue requestQueue;
+public class EntryRestCaller {
+    private final static String BEAN_EXTENSION = "entry";
 
-    public RequestManager(Context context) {
-        this.requestQueue = Volley.newRequestQueue(context);
+    private final RequestQueue requestQueue;
+    private final ServerConfig serverConfig;
+
+    public EntryRestCaller(RequestQueue requestQueue, ServerConfig serverConfig) {
+        this.requestQueue = requestQueue;
+        this.serverConfig = serverConfig;
     }
 
     public void createEntry(long entryHolderId, String name, Entry.Priority priority,
                             Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/createEntry";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "createEntry");
 
         CreateEntryRequestParameter requestParameter = new CreateEntryRequestParameter(entryHolderId, name, priority);
         String body = new Gson().toJson(requestParameter);
@@ -45,7 +49,7 @@ public class RequestManager {
 
     public void updateEntry(long entryId, String name, Entry.Priority priority,
                             Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/updateEntry";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "updateEntry");
 
         UpdateEntryRequestParameter requestParameter = new UpdateEntryRequestParameter(entryId, name, priority);
         String body = new Gson().toJson(requestParameter);
@@ -57,7 +61,7 @@ public class RequestManager {
 
     public void changeEntryStatus(long entryId, boolean isActive,
                                   Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/changeEntryStatus";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "changeEntryStatus");
 
         ChangeEntryStatusRequestParameter requestParameter = new ChangeEntryStatusRequestParameter(entryId, isActive);
         String body = new Gson().toJson(requestParameter);
@@ -68,7 +72,7 @@ public class RequestManager {
     }
 
     public void deleteEntry(long entryId, long entryHolderId, Response.Listener<BasicResponse<Entry>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/deleteEntry";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "deleteEntry");
 
         DeleteEntryRequestParameter requestParameter = new DeleteEntryRequestParameter(entryId, entryHolderId);
         String body = new Gson().toJson(requestParameter);
@@ -79,7 +83,7 @@ public class RequestManager {
     }
 
     public void getEntries(Response.Listener<BasicResponse<List<EntryHolder>>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/getEntries";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "getEntries");
 
         Type type = new TypeToken<BasicResponse<List<EntryHolder>>>() {}.getType();
         GetRequest<BasicResponse<List<EntryHolder>>> getRequest = new GetRequest<>(url, type, successListener, errorListener);
@@ -87,7 +91,7 @@ public class RequestManager {
     }
 
     public void createEntryHolder(String name, Response.Listener<BasicResponse<EntryHolder>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/createEntryHolder";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "createEntryHolder");
 
         CreateEntryHolderRequestParameter requestParameter = new CreateEntryHolderRequestParameter(name);
         String body = new Gson().toJson(requestParameter);
@@ -98,7 +102,7 @@ public class RequestManager {
     }
 
     public void editEntryHolder(long entryHolderId, String name, Response.Listener<BasicResponse<EntryHolder>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/editEntryHolder";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "editEntryHolder");
 
         EditEntryHolderRequestParameter requestParameter = new EditEntryHolderRequestParameter(entryHolderId, name);
         String body = new Gson().toJson(requestParameter);
@@ -109,7 +113,7 @@ public class RequestManager {
     }
 
     public void deleteEntryHolder(long entryHolderId, Response.Listener<BasicResponse<EntryHolder>> successListener, Response.ErrorListener errorListener) {
-        String url = "http://192.168.2.114:8080/rest/entry/deleteEntryHolder";
+        String url = this.serverConfig.createRestEndpoint(BEAN_EXTENSION, "deleteEntryHolder");
 
         DeleteEntryHolderRequestParameter requestParameter = new DeleteEntryHolderRequestParameter(entryHolderId);
         String body = new Gson().toJson(requestParameter);
