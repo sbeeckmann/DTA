@@ -24,7 +24,7 @@ import de.mycrocast.dtalisty.data.Entry;
 import de.mycrocast.dtalisty.data.EntryHolder;
 import de.mycrocast.dtalisty.dialogs.EntryCreateDialog;
 import de.mycrocast.dtalisty.dialogs.EntryEditDialog;
-import de.mycrocast.dtalisty.messaging.EntryRestCaller;
+import de.mycrocast.dtalisty.messaging.restcaller.EntryRestCaller;
 import de.mycrocast.dtalisty.messaging.response.BasicResponse;
 
 public class EntryListActivity extends AbstractActivity implements RecyclerClickListener, EntryCreateDialog.OnEntryCreated, EntryEditDialog.OnEntryEdited, EntryHolder.EntryChangeListener {

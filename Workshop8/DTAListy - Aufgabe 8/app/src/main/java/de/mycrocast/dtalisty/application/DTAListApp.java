@@ -6,9 +6,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import de.mycrocast.dtalisty.data.EntryHolderManager;
-import de.mycrocast.dtalisty.messaging.EntryRestCaller;
+import de.mycrocast.dtalisty.messaging.restcaller.EntryRestCaller;
 import de.mycrocast.dtalisty.messaging.ServerConfig;
-import de.mycrocast.dtalisty.messaging.UserRestCaller;
+import de.mycrocast.dtalisty.messaging.restcaller.UserRestCaller;
 
 public class DTAListApp extends Application {
     private final static String IP = "192.168.2.114";

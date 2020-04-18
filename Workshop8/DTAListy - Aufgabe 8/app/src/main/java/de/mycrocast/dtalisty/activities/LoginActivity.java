@@ -4,14 +4,19 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import de.mycrocast.dtalisty.R;
-import de.mycrocast.dtalisty.messaging.UserRestCaller;
+import de.mycrocast.dtalisty.data.User;
+import de.mycrocast.dtalisty.messaging.response.BasicResponse;
+import de.mycrocast.dtalisty.messaging.restcaller.UserRestCaller;
 
 public class LoginActivity extends AbstractActivity implements View.OnClickListener {
 
@@ -155,7 +160,23 @@ public class LoginActivity extends AbstractActivity implements View.OnClickListe
 
         // if both input fields have valid input, we want to send the login request to our backend server
         if (!username.isEmpty() && !password.isEmpty()) {
-            // TODO: send login request
+            this.userRestCaller.authenticate(username, password, new Response.Listener<BasicResponse<User>>() {
+                @Override
+                public void onResponse(BasicResponse<User> response) {
+                    if (response.getError() == null || response.getError().isEmpty()) {
+                        // TODO: open MainActivity
+                    } else {
+                        //TODO something more to show there was an error
+                        Toast.makeText(LoginActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // todo: show meaningful message to the end user for feedback
+                    System.out.println(error.getMessage());
+                }
+            });
         }
     }
 

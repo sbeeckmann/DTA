@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import de.mycrocast.dtalisty.application.DTAListApp;
 import de.mycrocast.dtalisty.data.EntryHolderManager;
-import de.mycrocast.dtalisty.messaging.EntryRestCaller;
-import de.mycrocast.dtalisty.messaging.UserRestCaller;
+import de.mycrocast.dtalisty.messaging.restcaller.EntryRestCaller;
+import de.mycrocast.dtalisty.messaging.restcaller.UserRestCaller;
 
 public abstract class AbstractActivity extends AppCompatActivity {
 
