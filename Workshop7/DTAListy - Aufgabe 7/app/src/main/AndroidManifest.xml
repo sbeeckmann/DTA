@@ -11,16 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        android:name=".application.DTAListApp">
-        <activity android:name=".activities.MainActivity">
+        android:usesCleartextTraffic="true">
+        <activity android:name=".OverviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.EntryListActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

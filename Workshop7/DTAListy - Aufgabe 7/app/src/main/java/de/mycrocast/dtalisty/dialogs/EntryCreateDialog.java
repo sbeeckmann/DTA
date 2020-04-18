@@ -44,7 +44,7 @@ public class EntryCreateDialog extends AbstractDialog {
             @Override
             public void onClick(View v) {
                 Entry.Priority priority = null;
-                switch (EntryCreateDialog.this.radioGroup.getCheckedRadioButtonId()) {
+                switch (radioGroup.getCheckedRadioButtonId()) {
                     case R.id.lowPriority: {
                         priority = Entry.Priority.LOW;
                         break;
@@ -61,8 +61,8 @@ public class EntryCreateDialog extends AbstractDialog {
                         break;
                     }
                 }
-                EntryCreateDialog.this.onEntryCreatedCallback.onEntryCreated(EntryCreateDialog.this.nameView.getText().toString(), priority);
-                EntryCreateDialog.this.dismiss();
+                onEntryCreatedCallback.onEntryCreated(nameView.getText().toString(), priority);
+                dismiss();
             }
         });
 

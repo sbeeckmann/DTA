@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.mycrocast.dtalisty.R;
@@ -19,11 +18,11 @@ import de.mycrocast.dtalisty.data.EntryHolder;
 
 public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.EntryHolderView> {
 
-    private List<EntryHolder> entryHolderList;
+    private List<EntryHolder> data;
     private RecyclerClickListener clickListener;
 
-    public EntryHolderAdapter() {
-        this.entryHolderList = new ArrayList<>();
+    public EntryHolderAdapter(List<EntryHolder> data) {
+        this.data = data;
     }
 
     public void setClickListener(RecyclerClickListener entryClickListener) {
@@ -42,7 +41,7 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull EntryHolderView holder, int position) {
-        EntryHolder entryHolder = this.entryHolderList.get(position);
+        EntryHolder entryHolder = this.data.get(position);
         holder.getName().setText(entryHolder.getName());
 
         int activeCount = 0;
@@ -59,37 +58,7 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
 
     @Override
     public int getItemCount() {
-        return this.entryHolderList.size();
-    }
-
-    public EntryHolder getByPosition(int position) {
-        if (position < 0 || position >= this.entryHolderList.size()) {
-            return null;
-        }
-
-        return this.entryHolderList.get(position);
-    }
-
-    public void setEntryHolderList(List<EntryHolder> entryHolders) {
-        this.entryHolderList.clear();
-        for (EntryHolder entryHolder : entryHolders) {
-            if (entryHolder != null) {
-                this.entryHolderList.add(entryHolder);
-            }
-        }
-    }
-
-    public void add(EntryHolder entryHolder) {
-        this.entryHolderList.add(entryHolder);
-    }
-
-    public void update(EntryHolder entryHolder) {
-        int position = this.entryHolderList.indexOf(entryHolder);
-        this.entryHolderList.set(position, entryHolder);
-    }
-
-    public void remove(EntryHolder entryHolder) {
-        this.entryHolderList.remove(entryHolder);
+        return this.data.size();
     }
 
     public class EntryHolderView extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -111,26 +80,26 @@ public class EntryHolderAdapter extends RecyclerView.Adapter<EntryHolderAdapter.
         }
 
         public TextView getName() {
-            return this.name;
+            return name;
         }
 
         public TextView getCount() {
-            return this.count;
+            return count;
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.edit: {
-                    EntryHolderAdapter.this.clickListener.onEditClick(v, this.getAdapterPosition());
+                    clickListener.onEditClick(v, getAdapterPosition());
                     return;
                 }
                 case R.id.delete: {
-                    EntryHolderAdapter.this.clickListener.onDeleteClick(v, this.getAdapterPosition());
+                    clickListener.onDeleteClick(v, getAdapterPosition());
                     return;
                 }
             }
-            EntryHolderAdapter.this.clickListener.onEntryClick(v, this.getAdapterPosition());
+            clickListener.onEntryClick(v, getAdapterPosition());
         }
     }
 }

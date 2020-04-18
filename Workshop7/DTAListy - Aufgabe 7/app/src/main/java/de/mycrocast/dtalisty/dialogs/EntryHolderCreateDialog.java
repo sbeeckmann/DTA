@@ -36,8 +36,8 @@ public class EntryHolderCreateDialog extends AbstractDialog {
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EntryHolderCreateDialog.this.onEntryHolderCreatedCallback.onEntryHolderCreated(EntryHolderCreateDialog.this.nameView.getText().toString());
-                EntryHolderCreateDialog.this.dismiss();
+                onEntryHolderCreatedCallback.onEntryHolderCreated(nameView.getText().toString());
+                dismiss();
             }
         });
 
