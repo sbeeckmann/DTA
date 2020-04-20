@@ -52,7 +52,9 @@ public class MainActivity extends AbstractActivity implements RecyclerClickListe
                 if (response.getError() == null || response.getError().isEmpty()) {
                     List<EntryHolder> entryHolderList = response.getResponseData();
                     MainActivity.this.entryHolderManager.setEntryHolders(entryHolderList);
+
                     MainActivity.this.holderAdapter.setEntryHolderList(entryHolderList);
+                    MainActivity.this.holderAdapter.notifyDataSetChanged();
                 } else {
                     //TODO something more to show there was an error
                     Toast.makeText(MainActivity.this, response.getError(), Toast.LENGTH_SHORT).show();

@@ -45,7 +45,11 @@ public class MainActivity extends AbstractActivity implements RecyclerClickListe
             @Override
             public void onResponse(BasicResponse<List<EntryHolder>> response) {
                 if (response.getError() == null || response.getError().isEmpty()) {
-                    MainActivity.this.entryHolderManager.setEntryHolders(response.getResponseData());
+                    List<EntryHolder> entryHolderList = response.getResponseData();
+                    MainActivity.this.entryHolderManager.setEntryHolders(entryHolderList);
+
+                    MainActivity.this.holderAdapter.setEntryHolderList(entryHolderList);
+                    MainActivity.this.holderAdapter.notifyDataSetChanged();
                 } else {
                     //TODO something more to show there was an error
                     Toast.makeText(MainActivity.this, response.getError(), Toast.LENGTH_SHORT).show();
@@ -96,9 +100,6 @@ public class MainActivity extends AbstractActivity implements RecyclerClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
-        this.holderAdapter.setEntryHolderList(this.entryHolderManager.getEntryHolders());
-        this.holderAdapter.notifyDataSetChanged();
 
         this.entryHolderManager.addChangeListener(this);
     }
