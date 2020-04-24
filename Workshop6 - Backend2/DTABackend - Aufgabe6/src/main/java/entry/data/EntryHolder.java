@@ -1,6 +1,7 @@
 package entry.data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NamedQueries({
@@ -22,7 +23,7 @@ public class EntryHolder {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY
     )
-    private List<Entry> entries;
+    private List<Entry> entries = new ArrayList<>();
 
     public long getId() {
         return id;

@@ -73,9 +73,10 @@ public class UserBean {
 
         try {
             if (users.isEmpty()) {
-                response.setError("Failed");
-                mapper.writeValueAsString(response);
+                response.setError("Authentication failed");
+                return mapper.writeValueAsString(response);
             }
+
             User user = users.get(0);
             byte[] salt = user.getSalt();
 
@@ -86,12 +87,13 @@ public class UserBean {
                 response.setResponseData(user);
                 return mapper.writeValueAsString(response);
             }
-            response.setError("Failed");
+
+            response.setError("Authentication failed");
             return mapper.writeValueAsString(response);
-
         } catch (JsonProcessingException | NoSuchAlgorithmException ex) {
-
+            ex.printStackTrace();
         }
+
         return "";
     }
 

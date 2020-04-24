@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_username">Benutzername</string>
+    <string name="hint_password">Password</string>
+    <string name="text_login">Einloggen</string>
+    <string name="text_register">Registrieren</string>
+    <string name="error_username_empty">Benutzername darf nicht leer sein.</string>
+    <string name="error_password_empty">Passwort darf nicht leer sein.</string>
+    <string name="error_password_mismatch">Passwörter stimmen nicht überein.</string>
+    <string name="hint_confirm_password">Passwort bestätigen</string>
+</resources>
