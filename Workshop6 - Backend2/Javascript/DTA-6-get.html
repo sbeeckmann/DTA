@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+ 
+<h2>JavaScript Get Example</h2>
+<p id="demo"></p>
+ 
+<script>
+
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() {
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+		{
+			document.getElementById("demo").innerHTML = xmlHttp.responseText;
+		}
+		else {
+			document.getElementById("demo").innerHTML ="failure"
+		}
+	}
+	xmlHttp.open("GET", "http://192.168.0.12:8080/rest/entry/getEntries", true);
+	xmlHttp.send(null);
+
+</script>
+ 
+</body>
+</html> 
