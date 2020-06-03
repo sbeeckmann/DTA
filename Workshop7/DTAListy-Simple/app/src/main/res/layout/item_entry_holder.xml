@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp"
+    android:background="#FFffff"
+    android:elevation="20dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="25dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:text="14/17" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/baseline_edit_black_24"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/count"
+        android:background="@null"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
+    <ImageButton
+        android:layout_below="@id/count"
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/baseline_delete_outline_black_24"
+        android:layout_alignParentEnd="true"
+        android:background="@null"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/entryWrapper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/priority"
+        android:layout_width="8dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/entryView"
+        android:layout_alignBottom="@id/entryView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+
+        android:background="@color/colorPrimaryDark" />
+
+    <LinearLayout
+        android:id="@+id/entryView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/priority"
+        android:layout_toEndOf="@id/priority"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/edit"
+        android:layout_toStartOf="@id/edit"
+        android:orientation="vertical"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp">
+
+        <TextView
+            android:id="@+id/entryContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/creationTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAlignment="gravity" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_below="@id/entryView"/>
+
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:tint="#000000"
+        android:background="@null"
+        app:srcCompat="@drawable/baseline_delete_outline_black_24" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:tint="#000000"
+        android:background="@null"
+        android:layout_toStartOf="@id/delete"
+        android:layout_marginEnd="5dp"
+        app:srcCompat="@drawable/baseline_edit_black_24" />
+</RelativeLayout>
