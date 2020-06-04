@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
 
                     URL getEndpoint = new URL("http://10.0.2.2:8080/rest/entry/createEntry");
                     HttpURLConnection connection = (HttpURLConnection) getEndpoint.openConnection();
+                    connection.setRequestProperty("Content-Type", "application/json");
                     connection.setRequestMethod("POST");
 
                     JSONObject jsonObject = new JSONObject();
@@ -264,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
 
                     JSONObject object = new JSONObject(sb.toString());
                     String error = object.getString("error");
-                    if (!error.isEmpty()) {
+                    if (!error.equals("null") && !error.isEmpty()) {
                         MainActivity.this.runOnUiThread(() -> {
                             Toast.makeText(MainActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
                         });
@@ -287,8 +288,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerClickList
 
                     MainActivity.this.entryData.add(entry);
                     MainActivity.this.sortEntries();
-                    MainActivity.this.entryAdapter.notifyDataSetChanged();
-                    Toast.makeText(MainActivity.this, "Erfolgreich erstellt", Toast.LENGTH_SHORT).show();
+                    MainActivity.this.runOnUiThread(() -> {
+                        MainActivity.this.entryAdapter.notifyDataSetChanged();
+                        Toast.makeText(MainActivity.this, "Erfolgreich erstellt", Toast.LENGTH_SHORT).show();
+                    });
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }

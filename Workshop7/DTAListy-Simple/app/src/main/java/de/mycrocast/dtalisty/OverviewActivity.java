@@ -105,7 +105,7 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
 
                     JSONObject object = new JSONObject(sb.toString());
                     String error = object.getString("error");
-                    if (!error.isEmpty()) {
+                    if (!error.equals("null") && !error.isEmpty()) {
                         OverviewActivity.this.runOnUiThread(() -> {
                             Toast.makeText(OverviewActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
                         });
@@ -146,7 +146,10 @@ public class OverviewActivity extends AppCompatActivity implements RecyclerClick
                         entryHolder.setEntries(entries);
                         data.add(entryHolder);
                     }
-                    holderAdapter.notifyDataSetChanged();
+                    OverviewActivity.this.runOnUiThread(() -> {
+                        holderAdapter.notifyDataSetChanged();
+                    });
+
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
